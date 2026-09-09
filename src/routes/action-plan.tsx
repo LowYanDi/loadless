@@ -1,5 +1,13 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, CheckCheck, Gauge, Lightbulb, RotateCcw, TrendingDown } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCheck,
+  Gauge,
+  Lightbulb,
+  RotateCcw,
+  TrendingDown,
+  UsersRound,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -96,6 +104,33 @@ function ActionPlan() {
               />
             ))}
           </div>
+        </CardContent>
+      </Card>
+
+      <Card className="rounded-2xl border-positive/40 bg-positive-soft/40 shadow-soft">
+        <CardContent className="grid gap-4 p-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+          <div className="flex items-start gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-card">
+              <UsersRound className="h-5 w-5 text-positive" aria-hidden="true" />
+            </span>
+            <div>
+              <p className="text-sm font-semibold">
+                Delegation should not create overload elsewhere
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Capacity Ripple previews Aina and Faiz together before the sponsor research is
+                moved.
+              </p>
+            </div>
+          </div>
+          <Button
+            variant="outline"
+            className="rounded-xl bg-card"
+            onClick={() => navigate({ to: "/lab" })}
+          >
+            Check team ripple
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Button>
         </CardContent>
       </Card>
 

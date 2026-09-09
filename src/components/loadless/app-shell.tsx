@@ -9,6 +9,7 @@ import {
   LineChart,
   Settings as SettingsIcon,
   Sparkles,
+  WandSparkles,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -26,6 +27,7 @@ const primaryNav = [
 ] as const;
 
 const secondaryNav = [
+  { to: "/lab", label: "Innovation Lab", short: "Lab", icon: WandSparkles },
   { to: "/insights", label: "Insights", short: "Insights", icon: LineChart },
   { to: "/settings", label: "Settings", short: "Settings", icon: SettingsIcon },
 ] as const;
@@ -93,8 +95,17 @@ export function AppShell({ children }: { children: ReactNode }) {
             </span>
             <span className="text-base font-bold tracking-tight">LoadLess</span>
           </span>
-          <span className="rounded-full bg-warning-soft px-3 py-1 text-xs font-semibold text-warning-foreground">
-            {currentCapacity}% used
+          <span className="flex items-center gap-2">
+            <Link
+              to="/lab"
+              aria-label="Open Innovation Lab"
+              className="grid h-8 w-8 place-items-center rounded-lg border border-border bg-card text-foreground"
+            >
+              <WandSparkles className="h-4 w-4" aria-hidden="true" />
+            </Link>
+            <span className="rounded-full bg-warning-soft px-3 py-1 text-xs font-semibold text-warning-foreground">
+              {currentCapacity}% used
+            </span>
           </span>
         </header>
 

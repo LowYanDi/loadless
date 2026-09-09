@@ -406,6 +406,14 @@ function Sandbox() {
             Find a realistic plan
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Button>
+          <Button
+            variant="outline"
+            className="w-full rounded-xl"
+            onClick={() => navigate({ to: "/lab" })}
+          >
+            Preview the four-day domino effect
+            <Zap className="h-4 w-4" aria-hidden="true" />
+          </Button>
         </CardContent>
       </Card>
     </div>

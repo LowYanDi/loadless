@@ -8,6 +8,7 @@ import {
   Info,
   ListTodo,
   TrendingUp,
+  WandSparkles,
 } from "lucide-react";
 import { useState } from "react";
 import {
@@ -116,6 +117,28 @@ function Dashboard() {
                 {checkIn.completed
                   ? `Active · ${checkInAdjustment > 0 ? "+" : ""}${checkInAdjustment} capacity points`
                   : "Not checked today · update energy, sleep and stress"}
+              </span>
+            </span>
+          </span>
+          <ArrowRight
+            className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1"
+            aria-hidden="true"
+          />
+        </Link>
+
+        <Link
+          to="/lab"
+          className="group flex items-center justify-between gap-4 rounded-2xl border border-primary/20 bg-primary p-4 text-primary-foreground shadow-lift transition-all hover:-translate-y-0.5 sm:col-span-2"
+        >
+          <span className="flex min-w-0 items-center gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-foreground/10">
+              <WandSparkles className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold">Explore the Innovation Lab</span>
+              <span className="block text-xs text-primary-foreground/70">
+                Domino forecast · recovery debt · team ripple · relationship patterns · Ask AI ·
+                challenge
               </span>
             </span>
           </span>

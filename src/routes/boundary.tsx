@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Copy, Pencil, Send, ShieldCheck } from "lucide-react";
+import { ArrowRight, Copy, History, Pencil, Send, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -127,6 +127,32 @@ function Boundary() {
               Mark as sent
             </Button>
           </div>
+        </CardContent>
+      </Card>
+
+      <Card className="rounded-2xl border-warning/40 bg-warning-soft shadow-soft">
+        <CardContent className="grid gap-4 p-5 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+          <div className="flex items-start gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-card">
+              <History className="h-5 w-5 text-warning-foreground" aria-hidden="true" />
+            </span>
+            <div>
+              <p className="text-sm font-semibold text-warning-foreground">
+                You accepted the last 4 Society requests above 85% capacity
+              </p>
+              <p className="mt-1 text-sm text-warning-foreground/75">
+                Relationship-aware mode can use this private pattern to offer a smaller yes.
+              </p>
+            </div>
+          </div>
+          <Button
+            variant="outline"
+            className="rounded-xl bg-card"
+            onClick={() => navigate({ to: "/lab" })}
+          >
+            Review pattern
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Button>
         </CardContent>
       </Card>
 
