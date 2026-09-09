@@ -8,6 +8,7 @@ import {
   type LoadLessTask,
   type TaskDraft,
   type TaskEffort,
+  type TaskStatus,
 } from "@/data/tasks";
 
 export type BoundaryTone = keyof typeof boundaryMessages;
@@ -23,6 +24,8 @@ export type CheckIn = {
   updatedAt: string | null;
 };
 
+// This calculation is intentionally shared with the check-in screen.
+// eslint-disable-next-line react-refresh/only-export-components
 export function calculateCheckInAdjustment(
   checkIn: Pick<CheckIn, "energy" | "sleepHours" | "stress">,
 ): number {
@@ -274,7 +277,10 @@ export function LoadLessDemoProvider({ children }: { children: ReactNode }) {
           ...current,
           tasks: current.tasks.map((task) =>
             task.id === id
-              ? { ...task, status: task.status === "pending" ? "done" : "pending" }
+              ? {
+                  ...task,
+                  status: (task.status === "pending" ? "done" : "pending") as TaskStatus,
+                }
               : task,
           ),
           completed: false,
@@ -313,6 +319,8 @@ export function LoadLessDemoProvider({ children }: { children: ReactNode }) {
   return <DemoContext.Provider value={value}>{children}</DemoContext.Provider>;
 }
 
+// Context providers and their consumer hooks are intentionally colocated.
+// eslint-disable-next-line react-refresh/only-export-components
 export function useLoadLessDemo() {
   const context = useContext(DemoContext);
   if (!context) throw new Error("useLoadLessDemo must be used inside LoadLessDemoProvider");
