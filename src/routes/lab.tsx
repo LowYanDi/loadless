@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowDown,
   ArrowRight,
@@ -8,6 +8,7 @@ import {
   Copy,
   Gamepad2,
   History,
+  Leaf,
   LockKeyhole,
   PauseCircle,
   RefreshCcw,
@@ -348,6 +349,27 @@ function RecoveryFeature() {
           positive={protectedBlock}
         />
       </div>
+
+      <Card className="rounded-2xl border-positive/40 bg-positive-soft/45 shadow-soft">
+        <CardContent className="grid gap-4 p-5 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center">
+          <span className="grid h-11 w-11 place-items-center rounded-xl bg-card">
+            <Leaf className="h-5 w-5 text-positive" aria-hidden="true" />
+          </span>
+          <div>
+            <p className="text-sm font-semibold">Recovery Menu</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Turn protected recovery time into a short action: Unload, breathe, stretch, walk,
+              listen, rest or connect.
+            </p>
+          </div>
+          <Button asChild className="rounded-xl">
+            <Link to="/reset">
+              Start a Reset
+              <ArrowRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          </Button>
+        </CardContent>
+      </Card>
 
       <div className="grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(18rem,0.85fr)]">
         <Card className="rounded-2xl border-border shadow-soft">

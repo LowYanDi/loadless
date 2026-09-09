@@ -6,6 +6,7 @@ import {
   FlaskConical,
   ListChecks,
   ListTodo,
+  Leaf,
   LineChart,
   Settings as SettingsIcon,
   Sparkles,
@@ -27,6 +28,7 @@ const primaryNav = [
 ] as const;
 
 const secondaryNav = [
+  { to: "/reset", label: "Reset Mode", short: "Reset", icon: Leaf },
   { to: "/lab", label: "Innovation Lab", short: "Lab", icon: WandSparkles },
   { to: "/insights", label: "Insights", short: "Insights", icon: LineChart },
   { to: "/settings", label: "Settings", short: "Settings", icon: SettingsIcon },
@@ -96,6 +98,13 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="text-base font-bold tracking-tight">LoadLess</span>
           </span>
           <span className="flex items-center gap-2">
+            <Link
+              to="/reset"
+              aria-label="Open Reset Mode"
+              className="grid h-8 w-8 place-items-center rounded-lg border border-positive/30 bg-positive-soft text-positive"
+            >
+              <Leaf className="h-4 w-4" aria-hidden="true" />
+            </Link>
             <Link
               to="/lab"
               aria-label="Open Innovation Lab"

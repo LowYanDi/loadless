@@ -174,3 +174,26 @@
     color: var(--color-foreground);
   }
 }
+
+@keyframes loadless-breathe {
+  0%,
+  100% {
+    transform: scale(0.82);
+  }
+  33% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1);
+  }
+}
+
+.breathing-orb {
+  animation: loadless-breathe 12s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .breathing-orb {
+    animation: none;
+  }
+}

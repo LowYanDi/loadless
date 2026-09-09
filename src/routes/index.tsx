@@ -6,6 +6,7 @@ import {
   Clock,
   HeartPulse,
   Info,
+  Leaf,
   ListTodo,
   TrendingUp,
   WandSparkles,
@@ -127,8 +128,29 @@ function Dashboard() {
         </Link>
 
         <Link
+          to="/reset"
+          className="group flex items-center justify-between gap-4 rounded-2xl border border-positive/30 bg-positive-soft/55 p-4 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"
+        >
+          <span className="flex min-w-0 items-center gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-card">
+              <Leaf className="h-5 w-5 text-positive" aria-hidden="true" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold">Take a short Reset</span>
+              <span className="block truncate text-xs text-muted-foreground">
+                Unload · breathe · stretch · walk · listen · rest
+              </span>
+            </span>
+          </span>
+          <ArrowRight
+            className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1"
+            aria-hidden="true"
+          />
+        </Link>
+
+        <Link
           to="/lab"
-          className="group flex items-center justify-between gap-4 rounded-2xl border border-primary/20 bg-primary p-4 text-primary-foreground shadow-lift transition-all hover:-translate-y-0.5 sm:col-span-2"
+          className="group flex items-center justify-between gap-4 rounded-2xl border border-primary/20 bg-primary p-4 text-primary-foreground shadow-lift transition-all hover:-translate-y-0.5"
         >
           <span className="flex min-w-0 items-center gap-3">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-foreground/10">

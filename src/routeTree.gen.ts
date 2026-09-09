@@ -17,6 +17,7 @@ import { Route as CheckInRouteImport } from './routes/check-in'
 import { Route as HiddenLoadRouteImport } from './routes/hidden-load'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as LabRouteImport } from './routes/lab'
+import { Route as ResetRouteImport } from './routes/reset'
 import { Route as SandboxRouteImport } from './routes/sandbox'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as TasksRouteImport } from './routes/tasks'
@@ -61,6 +62,11 @@ const LabRoute = LabRouteImport.update({
   path: '/lab',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetRoute = ResetRouteImport.update({
+  id: '/reset',
+  path: '/reset',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SandboxRoute = SandboxRouteImport.update({
   id: '/sandbox',
   path: '/sandbox',
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
   '/lab': typeof LabRoute
+  '/reset': typeof ResetRoute
   '/sandbox': typeof SandboxRoute
   '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
   '/lab': typeof LabRoute
+  '/reset': typeof ResetRoute
   '/sandbox': typeof SandboxRoute
   '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
   '/lab': typeof LabRoute
+  '/reset': typeof ResetRoute
   '/sandbox': typeof SandboxRoute
   '/settings': typeof SettingsRoute
   '/tasks': typeof TasksRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/hidden-load'
     | '/insights'
     | '/lab'
+    | '/reset'
     | '/sandbox'
     | '/settings'
     | '/tasks'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/hidden-load'
     | '/insights'
     | '/lab'
+    | '/reset'
     | '/sandbox'
     | '/settings'
     | '/tasks'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/hidden-load'
     | '/insights'
     | '/lab'
+    | '/reset'
     | '/sandbox'
     | '/settings'
     | '/tasks'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   HiddenLoadRoute: typeof HiddenLoadRoute
   InsightsRoute: typeof InsightsRoute
   LabRoute: typeof LabRoute
+  ResetRoute: typeof ResetRoute
   SandboxRoute: typeof SandboxRoute
   SettingsRoute: typeof SettingsRoute
   TasksRoute: typeof TasksRoute
@@ -231,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset': {
+      id: '/reset'
+      path: '/reset'
+      fullPath: '/reset'
+      preLoaderRoute: typeof ResetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sandbox': {
       id: '/sandbox'
       path: '/sandbox'
@@ -264,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   HiddenLoadRoute: HiddenLoadRoute,
   InsightsRoute: InsightsRoute,
   LabRoute: LabRoute,
+  ResetRoute: ResetRoute,
   SandboxRoute: SandboxRoute,
   SettingsRoute: SettingsRoute,
   TasksRoute: TasksRoute,
