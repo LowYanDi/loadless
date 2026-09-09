@@ -53,7 +53,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <Sparkles className="h-4.5 w-4.5" aria-hidden="true" />
           </span>
           <span className="min-w-0">
-            <span className="block truncate text-base font-bold tracking-tight">LoadLess</span>
+            <span className="block truncate text-base font-bold tracking-tight">Easey</span>
             <span className="block truncate text-[11px] text-muted-foreground">
               Know your capacity
             </span>
@@ -95,7 +95,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
               <Sparkles className="h-4 w-4" aria-hidden="true" />
             </span>
-            <span className="text-base font-bold tracking-tight">LoadLess</span>
+            <span className="text-base font-bold tracking-tight">Easey</span>
           </span>
           <span className="flex items-center gap-2">
             <Link
@@ -122,7 +122,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <DecisionJourney pathname={pathname} />
           {children}
           <p className="mt-10 border-t border-border pt-5 text-center text-xs leading-relaxed text-muted-foreground">
-            LoadLess estimates workload capacity and is not a medical diagnostic tool.
+            Easey estimates workload capacity and is not a medical diagnostic tool.
           </p>
         </main>
       </div>
