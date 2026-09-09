@@ -13,10 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ActionPlanRouteImport } from './routes/action-plan'
 import { Route as AfterRouteImport } from './routes/after'
 import { Route as BoundaryRouteImport } from './routes/boundary'
+import { Route as CheckInRouteImport } from './routes/check-in'
 import { Route as HiddenLoadRouteImport } from './routes/hidden-load'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as SandboxRouteImport } from './routes/sandbox'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as TasksRouteImport } from './routes/tasks'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -36,6 +38,11 @@ const AfterRoute = AfterRouteImport.update({
 const BoundaryRoute = BoundaryRouteImport.update({
   id: '/boundary',
   path: '/boundary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckInRoute = CheckInRouteImport.update({
+  id: '/check-in',
+  path: '/check-in',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HiddenLoadRoute = HiddenLoadRouteImport.update({
@@ -58,26 +65,35 @@ const SettingsRoute = SettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/action-plan': typeof ActionPlanRoute
   '/after': typeof AfterRoute
   '/boundary': typeof BoundaryRoute
+  '/check-in': typeof CheckInRoute
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
   '/sandbox': typeof SandboxRoute
   '/settings': typeof SettingsRoute
+  '/tasks': typeof TasksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/action-plan': typeof ActionPlanRoute
   '/after': typeof AfterRoute
   '/boundary': typeof BoundaryRoute
+  '/check-in': typeof CheckInRoute
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
   '/sandbox': typeof SandboxRoute
   '/settings': typeof SettingsRoute
+  '/tasks': typeof TasksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -85,10 +101,12 @@ export interface FileRoutesById {
   '/action-plan': typeof ActionPlanRoute
   '/after': typeof AfterRoute
   '/boundary': typeof BoundaryRoute
+  '/check-in': typeof CheckInRoute
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
   '/sandbox': typeof SandboxRoute
   '/settings': typeof SettingsRoute
+  '/tasks': typeof TasksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -97,30 +115,36 @@ export interface FileRouteTypes {
     | '/action-plan'
     | '/after'
     | '/boundary'
+    | '/check-in'
     | '/hidden-load'
     | '/insights'
     | '/sandbox'
     | '/settings'
+    | '/tasks'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/action-plan'
     | '/after'
     | '/boundary'
+    | '/check-in'
     | '/hidden-load'
     | '/insights'
     | '/sandbox'
     | '/settings'
+    | '/tasks'
   id:
     | '__root__'
     | '/'
     | '/action-plan'
     | '/after'
     | '/boundary'
+    | '/check-in'
     | '/hidden-load'
     | '/insights'
     | '/sandbox'
     | '/settings'
+    | '/tasks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -128,10 +152,12 @@ export interface RootRouteChildren {
   ActionPlanRoute: typeof ActionPlanRoute
   AfterRoute: typeof AfterRoute
   BoundaryRoute: typeof BoundaryRoute
+  CheckInRoute: typeof CheckInRoute
   HiddenLoadRoute: typeof HiddenLoadRoute
   InsightsRoute: typeof InsightsRoute
   SandboxRoute: typeof SandboxRoute
   SettingsRoute: typeof SettingsRoute
+  TasksRoute: typeof TasksRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -164,6 +190,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BoundaryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/check-in': {
+      id: '/check-in'
+      path: '/check-in'
+      fullPath: '/check-in'
+      preLoaderRoute: typeof CheckInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hidden-load': {
       id: '/hidden-load'
       path: '/hidden-load'
@@ -192,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -200,10 +240,12 @@ const rootRouteChildren: RootRouteChildren = {
   ActionPlanRoute: ActionPlanRoute,
   AfterRoute: AfterRoute,
   BoundaryRoute: BoundaryRoute,
+  CheckInRoute: CheckInRoute,
   HiddenLoadRoute: HiddenLoadRoute,
   InsightsRoute: InsightsRoute,
   SandboxRoute: SandboxRoute,
   SettingsRoute: SettingsRoute,
+  TasksRoute: TasksRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

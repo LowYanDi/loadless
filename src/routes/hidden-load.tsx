@@ -25,7 +25,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { PageHeader } from "@/components/loadless/page-header";
 import { StatusPill } from "@/components/loadless/status-pill";
 import { demoMessage, extractedCommitment } from "@/data/loadless";
-import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
+import { useLoadLessDemo, type DeadlineOption, type EffortLevel } from "@/hooks/use-loadless-demo";
 
 export const Route = createFileRoute("/hidden-load")({
   head: () => ({
@@ -48,7 +48,19 @@ export const Route = createFileRoute("/hidden-load")({
 
 function HiddenLoad() {
   const navigate = useNavigate();
-  const { message, setMessage, extracted, setExtracted, setSandboxChoice } = useLoadLessDemo();
+  const {
+    message,
+    setMessage,
+    extracted,
+    setExtracted,
+    setCommitmentTask,
+    setCommitmentCategory,
+    setCommitmentFlexibility,
+    setDurationHours,
+    setEffortLevel,
+    setDeadlineOption,
+    setSandboxChoice,
+  } = useLoadLessDemo();
   const [extracting, setExtracting] = useState(false);
   const [editing, setEditing] = useState(false);
   const [fields, setFields] = useState({
@@ -238,6 +250,37 @@ function HiddenLoad() {
                 <Button
                   className="rounded-xl"
                   onClick={() => {
+                    const duration = Number.parseFloat(fields.duration);
+                    if (
+                      !fields.task.trim() ||
+                      !fields.category.trim() ||
+                      !fields.deadline.trim() ||
+                      !Number.isFinite(duration) ||
+                      duration <= 0
+                    ) {
+                      toast.error("Confirm the task, category, deadline and duration first");
+                      setEditing(true);
+                      return;
+                    }
+
+                    const deadlineText = fields.deadline.toLowerCase();
+                    const deadline: DeadlineOption = deadlineText.includes("next")
+                      ? "Next week"
+                      : deadlineText.includes("fri")
+                        ? "Friday"
+                        : "Wednesday";
+                    const effort: EffortLevel = ["Low", "Medium", "High"].includes(
+                      fields.mentalEffort,
+                    )
+                      ? (fields.mentalEffort as EffortLevel)
+                      : "Medium";
+
+                    setCommitmentTask(fields.task.trim());
+                    setCommitmentCategory(fields.category.trim());
+                    setCommitmentFlexibility(fields.flexibility.trim() || "Medium");
+                    setDurationHours(Math.min(24, duration));
+                    setEffortLevel(effort);
+                    setDeadlineOption(deadline);
                     setSandboxChoice("accept");
                     navigate({ to: "/sandbox" });
                   }}

@@ -29,7 +29,6 @@ import { CapacityRing } from "@/components/loadless/capacity-ring";
 import { PageHeader } from "@/components/loadless/page-header";
 import { StatusPill } from "@/components/loadless/status-pill";
 import {
-  extractedCommitment,
   forecastLoad,
   labelFor,
   levelFor,
@@ -76,13 +75,16 @@ function Sandbox() {
     setDeadlineOption,
     incomingBreakdown,
     incomingLoad,
+    baseCapacity,
     forecastCapacity,
+    commitmentTask,
+    commitmentCategory,
   } = useLoadLessDemo();
   const options = [
     {
       id: "accept",
       title: "Accept as requested",
-      detail: `Full deck · ${durationHours} hours · due ${deadlineOption}`,
+      detail: `${commitmentTask} · ${durationHours} hours · due ${deadlineOption}`,
       result: `${forecastCapacity}% · ${labelFor(forecastCapacity).toLowerCase()}`,
       capacity: forecastCapacity,
       level: levelFor(forecastCapacity),
@@ -103,14 +105,14 @@ function Sandbox() {
       id: "decline",
       title: "Decline",
       detail: "Suggest another society member takes it on",
-      result: `${sandbox.current}% · unchanged`,
-      capacity: sandbox.current,
-      level: levelFor(sandbox.current),
+      result: `${baseCapacity}% · unchanged`,
+      capacity: baseCapacity,
+      level: levelFor(baseCapacity),
       icon: X,
     },
   ];
   const selectedOption = options.find((option) => option.id === choice) ?? options[0]!;
-  const choiceDelta = selectedOption.capacity - sandbox.current;
+  const choiceDelta = selectedOption.capacity - baseCapacity;
   const forecastScale = incomingLoad / sandbox.added;
   const comparisonData = weeklyLoad.map((day, index) => ({
     ...day,
@@ -132,7 +134,7 @@ function Sandbox() {
       <PageHeader
         eyebrow="Simulation"
         title="Commitment Sandbox"
-        description={`Testing "${extractedCommitment.task}" against your current week. Nothing is committed here.`}
+        description={`Testing "${commitmentTask}" (${commitmentCategory}) against your current week. Nothing is committed here.`}
       />
 
       <Card className="overflow-hidden rounded-2xl border-primary/20 shadow-lift">
@@ -230,7 +232,9 @@ function Sandbox() {
                 <p className="text-[11px] uppercase tracking-wide text-primary-foreground/65">
                   Incoming load
                 </p>
-                <p className="mt-0.5 text-xs text-primary-foreground/75">Added to an 82% week</p>
+                <p className="mt-0.5 text-xs text-primary-foreground/75">
+                  Added to a {baseCapacity}% week
+                </p>
               </div>
               <p className="text-3xl font-bold tabular-nums">+{incomingLoad}%</p>
             </div>
@@ -241,7 +245,7 @@ function Sandbox() {
       <div className="grid gap-4 sm:grid-cols-3">
         <Card className="rounded-2xl border-border shadow-soft">
           <CardContent className="flex flex-col items-center gap-3 p-5">
-            <CapacityRing value={sandbox.current} size={148} caption="right now" />
+            <CapacityRing value={baseCapacity} size={148} caption="right now" />
             <p className="text-sm font-semibold">Current capacity</p>
             <StatusPill level="caution" label="Approaching your limit" />
           </CardContent>

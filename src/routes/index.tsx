@@ -1,5 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CalendarDays, ChevronDown, Clock, Info, TrendingUp } from "lucide-react";
+import {
+  ArrowRight,
+  CalendarDays,
+  ChevronDown,
+  Clock,
+  HeartPulse,
+  Info,
+  ListTodo,
+  TrendingUp,
+} from "lucide-react";
 import { useState } from "react";
 import {
   Bar,
@@ -19,12 +28,14 @@ import { CategoryBar } from "@/components/loadless/category-bar";
 import { StatusPill } from "@/components/loadless/status-pill";
 import {
   categories,
+  labelFor,
+  levelFor,
   scoreFactors,
-  upcoming,
   updatedWeeklyLoad,
   user,
   weeklyLoad,
 } from "@/data/loadless";
+import { taskImpact, taskLoadLevel } from "@/data/tasks";
 import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
 
 export const Route = createFileRoute("/")({
@@ -51,9 +62,10 @@ const barColor = (v: number) =>
 
 function Dashboard() {
   const [showFactors, setShowFactors] = useState(false);
-  const { completed, currentCapacity } = useLoadLessDemo();
+  const { completed, currentCapacity, tasks, checkIn, checkInAdjustment } = useLoadLessDemo();
   const displayedWeek = completed ? updatedWeeklyLoad : weeklyLoad;
-  const status = completed ? "Back within a realistic range" : user.status;
+  const status = completed ? "Back within a realistic range" : labelFor(currentCapacity);
+  const activeTasks = tasks.filter((task) => task.status === "pending").slice(0, 5);
 
   return (
     <div className="space-y-6">
@@ -67,6 +79,53 @@ function Dashboard() {
         <p className="mt-2 text-sm text-muted-foreground">Know your capacity before you say yes.</p>
       </header>
 
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Link
+          to="/tasks"
+          className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-4 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"
+        >
+          <span className="flex min-w-0 items-center gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-secondary">
+              <ListTodo className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold">Manage commitments</span>
+              <span className="block truncate text-xs text-muted-foreground">
+                {tasks.filter((task) => task.status === "pending").length} active tasks · add, edit
+                or complete
+              </span>
+            </span>
+          </span>
+          <ArrowRight
+            className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1"
+            aria-hidden="true"
+          />
+        </Link>
+
+        <Link
+          to="/check-in"
+          className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-card p-4 shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift"
+        >
+          <span className="flex min-w-0 items-center gap-3">
+            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-positive-soft">
+              <HeartPulse className="h-5 w-5 text-positive" aria-hidden="true" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-sm font-semibold">60-second check-in</span>
+              <span className="block truncate text-xs text-muted-foreground">
+                {checkIn.completed
+                  ? `Active · ${checkInAdjustment > 0 ? "+" : ""}${checkInAdjustment} capacity points`
+                  : "Not checked today · update energy, sleep and stress"}
+              </span>
+            </span>
+          </span>
+          <ArrowRight
+            className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-1"
+            aria-hidden="true"
+          />
+        </Link>
+      </div>
+
       <Card className="rounded-2xl border-border shadow-soft">
         <CardContent className="grid gap-6 p-5 sm:p-6 md:grid-cols-[auto_minmax(0,1fr)] md:items-center">
           <div className="flex justify-center">
@@ -74,7 +133,7 @@ function Dashboard() {
           </div>
           <div className="min-w-0 space-y-4">
             <div className="space-y-2">
-              <StatusPill level={completed ? "healthy" : "caution"} label={status} />
+              <StatusPill level={levelFor(currentCapacity)} label={status} />
               <p className="text-sm text-muted-foreground">
                 You have used {currentCapacity}% of a realistic 45-hour week.{" "}
                 {completed
@@ -210,29 +269,36 @@ function Dashboard() {
           <CardTitle className="text-base">Upcoming commitments</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          {upcoming.map((item) => (
+          {activeTasks.map((item) => (
             <div
-              key={item.title}
+              key={item.id}
               className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border border-border bg-background p-3.5"
             >
               <div className="min-w-0">
                 <p className="truncate text-sm font-semibold">{item.title}</p>
                 <p className="mt-0.5 flex items-center gap-1.5 truncate text-xs text-muted-foreground">
                   <Clock className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                  {item.category} · {item.when} · {item.hours}
+                  {item.category} · {item.deadline} · {item.hours} h
                 </p>
               </div>
-              <StatusPill
-                level={item.level}
-                label={
-                  item.level === "overload" ? "Tight" : item.level === "caution" ? "Watch" : "Fine"
-                }
-              />
+              <StatusPill level={taskLoadLevel(item)} label={`+${taskImpact(item)} points`} />
             </div>
           ))}
+          {activeTasks.length === 0 ? (
+            <div className="rounded-xl border border-dashed border-border p-8 text-center">
+              <p className="text-sm font-semibold">No active commitments</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Add a task to rebuild your weekly capacity.
+              </p>
+            </div>
+          ) : null}
           <p className="pt-1 text-xs text-muted-foreground">
-            Categories over 75% are flagged so you can act before the week fills up.
+            Task points combine estimated duration and mental effort. Manage them to keep the
+            dashboard current.
           </p>
+          <Button asChild variant="outline" className="w-full rounded-xl">
+            <Link to="/tasks">Open task manager</Link>
+          </Button>
         </CardContent>
       </Card>
     </div>

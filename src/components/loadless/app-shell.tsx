@@ -1,9 +1,11 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Gauge,
+  HeartPulse,
   Inbox,
   FlaskConical,
   ListChecks,
+  ListTodo,
   LineChart,
   Settings as SettingsIcon,
   Sparkles,
@@ -14,14 +16,21 @@ import { user } from "@/data/loadless";
 import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
 import { DecisionJourney } from "@/components/loadless/decision-journey";
 
-const nav = [
+const primaryNav = [
   { to: "/", label: "Dashboard", short: "Home", icon: Gauge },
+  { to: "/tasks", label: "Commitments", short: "Tasks", icon: ListTodo },
+  { to: "/check-in", label: "60-sec Check-in", short: "Check-in", icon: HeartPulse },
   { to: "/hidden-load", label: "Hidden Load", short: "Inbox", icon: Inbox },
   { to: "/sandbox", label: "Sandbox", short: "Sandbox", icon: FlaskConical },
   { to: "/action-plan", label: "Action Plan", short: "Plan", icon: ListChecks },
+] as const;
+
+const secondaryNav = [
   { to: "/insights", label: "Insights", short: "Insights", icon: LineChart },
   { to: "/settings", label: "Settings", short: "Settings", icon: SettingsIcon },
 ] as const;
+
+const desktopNav = [...primaryNav, ...secondaryNav] as const;
 
 const planPaths = ["/action-plan", "/boundary", "/after"];
 
@@ -48,7 +57,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </Link>
 
         <nav className="mt-8 flex flex-1 flex-col gap-1" aria-label="Main">
-          {nav.map((item) => (
+          {desktopNav.map((item) => (
             <Link
               key={item.to}
               to={item.to}
@@ -102,7 +111,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-6 border-t border-border bg-card/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
         aria-label="Main"
       >
-        {nav.map((item) => (
+        {primaryNav.map((item) => (
           <Link
             key={item.to}
             to={item.to}

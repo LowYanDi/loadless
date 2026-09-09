@@ -1,11 +1,35 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { boundaryMessages, demoMessage, recommendations, sandbox } from "@/data/loadless";
+import {
+  initialTaskImpact,
+  initialTasks,
+  taskImpact,
+  type LoadLessTask,
+  type TaskDraft,
+  type TaskEffort,
+} from "@/data/tasks";
 
 export type BoundaryTone = keyof typeof boundaryMessages;
 export type SandboxChoice = "accept" | "reduce" | "decline";
-export type EffortLevel = "Low" | "Medium" | "High";
+export type EffortLevel = TaskEffort;
 export type DeadlineOption = "Wednesday" | "Friday" | "Next week";
+
+export type CheckIn = {
+  energy: number;
+  sleepHours: number;
+  stress: number;
+  completed: boolean;
+  updatedAt: string | null;
+};
+
+export function calculateCheckInAdjustment(
+  checkIn: Pick<CheckIn, "energy" | "sleepHours" | "stress">,
+): number {
+  return Math.round(
+    (3 - checkIn.energy) * 2 + (7 - checkIn.sleepHours) * 2 + (checkIn.stress - 3) * 2,
+  );
+}
 
 export type IncomingBreakdown = {
   time: number;
@@ -17,9 +41,14 @@ export type IncomingBreakdown = {
 type DemoState = {
   message: string;
   extracted: boolean;
+  commitmentTask: string;
+  commitmentCategory: string;
+  commitmentFlexibility: string;
   durationHours: number;
   effortLevel: EffortLevel;
   deadlineOption: DeadlineOption;
+  tasks: LoadLessTask[];
+  checkIn: CheckIn;
   sandboxChoice: SandboxChoice;
   selectedActions: string[];
   tone: BoundaryTone;
@@ -29,7 +58,10 @@ type DemoState = {
 };
 
 type DemoContextValue = DemoState & {
+  baseCapacity: number;
   currentCapacity: number;
+  taskCapacityAdjustment: number;
+  checkInAdjustment: number;
   incomingLoad: number;
   incomingBreakdown: IncomingBreakdown;
   forecastCapacity: number;
@@ -37,6 +69,9 @@ type DemoContextValue = DemoState & {
   savedCapacity: number;
   setMessage: (message: string) => void;
   setExtracted: (extracted: boolean) => void;
+  setCommitmentTask: (task: string) => void;
+  setCommitmentCategory: (category: string) => void;
+  setCommitmentFlexibility: (flexibility: string) => void;
   setDurationHours: (hours: number) => void;
   setEffortLevel: (level: EffortLevel) => void;
   setDeadlineOption: (deadline: DeadlineOption) => void;
@@ -47,6 +82,11 @@ type DemoContextValue = DemoState & {
   setTone: (tone: BoundaryTone) => void;
   setBoundaryMessage: (message: string) => void;
   setMessageSent: (sent: boolean) => void;
+  addTask: (task: TaskDraft) => void;
+  updateTask: (id: string, task: TaskDraft) => void;
+  deleteTask: (id: string) => void;
+  toggleTaskStatus: (id: string) => void;
+  saveCheckIn: (checkIn: Pick<CheckIn, "energy" | "sleepHours" | "stress">) => void;
   completeDemo: () => void;
   resetDemo: () => void;
 };
@@ -56,9 +96,20 @@ const STORAGE_KEY = "loadless-demo-v1";
 const initialState: DemoState = {
   message: demoMessage,
   extracted: false,
+  commitmentTask: "Prepare sponsorship deck",
+  commitmentCategory: "Society",
+  commitmentFlexibility: "Medium",
   durationHours: 3,
   effortLevel: "High",
   deadlineOption: "Wednesday",
+  tasks: initialTasks,
+  checkIn: {
+    energy: 3,
+    sleepHours: 7,
+    stress: 3,
+    completed: false,
+    updatedAt: null,
+  },
   sandboxChoice: "accept",
   selectedActions: [],
   tone: "Friendly",
@@ -99,6 +150,16 @@ export function LoadLessDemoProvider({ children }: { children: ReactNode }) {
     .filter((recommendation) => state.selectedActions.includes(recommendation.id))
     .reduce((total, recommendation) => total + recommendation.saving, 0);
 
+  const currentTaskImpact = state.tasks
+    .filter((task) => task.status === "pending")
+    .reduce((total, task) => total + taskImpact(task), 0);
+  const taskCapacityAdjustment = currentTaskImpact - initialTaskImpact;
+  const checkInAdjustment = state.checkIn.completed ? calculateCheckInAdjustment(state.checkIn) : 0;
+  const baseCapacity = Math.max(
+    0,
+    Math.min(150, sandbox.current + taskCapacityAdjustment + checkInAdjustment),
+  );
+
   const incomingBreakdown = useMemo<IncomingBreakdown>(
     () => ({
       time: state.durationHours * 4,
@@ -109,14 +170,17 @@ export function LoadLessDemoProvider({ children }: { children: ReactNode }) {
     [state.deadlineOption, state.durationHours, state.effortLevel],
   );
   const incomingLoad = Object.values(incomingBreakdown).reduce((total, value) => total + value, 0);
-  const forecastCapacity = sandbox.current + incomingLoad;
+  const forecastCapacity = baseCapacity + incomingLoad;
   const projectedCapacity = forecastCapacity - savedCapacity;
-  const currentCapacity = state.completed ? projectedCapacity : sandbox.current;
+  const currentCapacity = state.completed ? projectedCapacity : baseCapacity;
 
   const value = useMemo<DemoContextValue>(
     () => ({
       ...state,
+      baseCapacity,
       currentCapacity,
+      taskCapacityAdjustment,
+      checkInAdjustment,
       incomingLoad,
       incomingBreakdown,
       forecastCapacity,
@@ -124,6 +188,12 @@ export function LoadLessDemoProvider({ children }: { children: ReactNode }) {
       savedCapacity,
       setMessage: (message) => setState((current) => ({ ...current, message })),
       setExtracted: (extracted) => setState((current) => ({ ...current, extracted })),
+      setCommitmentTask: (commitmentTask) =>
+        setState((current) => ({ ...current, commitmentTask })),
+      setCommitmentCategory: (commitmentCategory) =>
+        setState((current) => ({ ...current, commitmentCategory })),
+      setCommitmentFlexibility: (commitmentFlexibility) =>
+        setState((current) => ({ ...current, commitmentFlexibility })),
       setDurationHours: (durationHours) =>
         setState((current) => ({
           ...current,
@@ -169,6 +239,56 @@ export function LoadLessDemoProvider({ children }: { children: ReactNode }) {
       setBoundaryMessage: (boundaryMessage) =>
         setState((current) => ({ ...current, boundaryMessage })),
       setMessageSent: (messageSent) => setState((current) => ({ ...current, messageSent })),
+      addTask: (task) =>
+        setState((current) => ({
+          ...current,
+          tasks: [
+            ...current.tasks,
+            {
+              ...task,
+              id:
+                typeof crypto !== "undefined" && "randomUUID" in crypto
+                  ? crypto.randomUUID()
+                  : `task-${Date.now()}`,
+              status: "pending",
+            },
+          ],
+          completed: false,
+        })),
+      updateTask: (id, task) =>
+        setState((current) => ({
+          ...current,
+          tasks: current.tasks.map((currentTask) =>
+            currentTask.id === id ? { ...currentTask, ...task } : currentTask,
+          ),
+          completed: false,
+        })),
+      deleteTask: (id) =>
+        setState((current) => ({
+          ...current,
+          tasks: current.tasks.filter((task) => task.id !== id),
+          completed: false,
+        })),
+      toggleTaskStatus: (id) =>
+        setState((current) => ({
+          ...current,
+          tasks: current.tasks.map((task) =>
+            task.id === id
+              ? { ...task, status: task.status === "pending" ? "done" : "pending" }
+              : task,
+          ),
+          completed: false,
+        })),
+      saveCheckIn: (checkIn) =>
+        setState((current) => ({
+          ...current,
+          checkIn: {
+            ...checkIn,
+            completed: true,
+            updatedAt: new Date().toISOString(),
+          },
+          completed: false,
+        })),
       completeDemo: () =>
         setState((current) => ({ ...current, messageSent: true, completed: true })),
       resetDemo: () => {
@@ -177,6 +297,8 @@ export function LoadLessDemoProvider({ children }: { children: ReactNode }) {
       },
     }),
     [
+      baseCapacity,
+      checkInAdjustment,
       currentCapacity,
       forecastCapacity,
       incomingBreakdown,
@@ -184,6 +306,7 @@ export function LoadLessDemoProvider({ children }: { children: ReactNode }) {
       projectedCapacity,
       savedCapacity,
       state,
+      taskCapacityAdjustment,
     ],
   );
 
