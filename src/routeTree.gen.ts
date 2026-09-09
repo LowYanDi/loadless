@@ -14,6 +14,7 @@ import { Route as ActionPlanRouteImport } from './routes/action-plan'
 import { Route as AfterRouteImport } from './routes/after'
 import { Route as BoundaryRouteImport } from './routes/boundary'
 import { Route as CheckInRouteImport } from './routes/check-in'
+import { Route as CircleRouteImport } from './routes/circle'
 import { Route as HiddenLoadRouteImport } from './routes/hidden-load'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as LabRouteImport } from './routes/lab'
@@ -45,6 +46,11 @@ const BoundaryRoute = BoundaryRouteImport.update({
 const CheckInRoute = CheckInRouteImport.update({
   id: '/check-in',
   path: '/check-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CircleRoute = CircleRouteImport.update({
+  id: '/circle',
+  path: '/circle',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HiddenLoadRoute = HiddenLoadRouteImport.update({
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/after': typeof AfterRoute
   '/boundary': typeof BoundaryRoute
   '/check-in': typeof CheckInRoute
+  '/circle': typeof CircleRoute
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
   '/lab': typeof LabRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/after': typeof AfterRoute
   '/boundary': typeof BoundaryRoute
   '/check-in': typeof CheckInRoute
+  '/circle': typeof CircleRoute
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
   '/lab': typeof LabRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/after': typeof AfterRoute
   '/boundary': typeof BoundaryRoute
   '/check-in': typeof CheckInRoute
+  '/circle': typeof CircleRoute
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
   '/lab': typeof LabRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/after'
     | '/boundary'
     | '/check-in'
+    | '/circle'
     | '/hidden-load'
     | '/insights'
     | '/lab'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/after'
     | '/boundary'
     | '/check-in'
+    | '/circle'
     | '/hidden-load'
     | '/insights'
     | '/lab'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/after'
     | '/boundary'
     | '/check-in'
+    | '/circle'
     | '/hidden-load'
     | '/insights'
     | '/lab'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   AfterRoute: typeof AfterRoute
   BoundaryRoute: typeof BoundaryRoute
   CheckInRoute: typeof CheckInRoute
+  CircleRoute: typeof CircleRoute
   HiddenLoadRoute: typeof HiddenLoadRoute
   InsightsRoute: typeof InsightsRoute
   LabRoute: typeof LabRoute
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       path: '/check-in'
       fullPath: '/check-in'
       preLoaderRoute: typeof CheckInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/circle': {
+      id: '/circle'
+      path: '/circle'
+      fullPath: '/circle'
+      preLoaderRoute: typeof CircleRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hidden-load': {
@@ -281,6 +301,7 @@ const rootRouteChildren: RootRouteChildren = {
   AfterRoute: AfterRoute,
   BoundaryRoute: BoundaryRoute,
   CheckInRoute: CheckInRoute,
+  CircleRoute: CircleRoute,
   HiddenLoadRoute: HiddenLoadRoute,
   InsightsRoute: InsightsRoute,
   LabRoute: LabRoute,

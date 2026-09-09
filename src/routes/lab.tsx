@@ -582,17 +582,24 @@ function TeamRippleFeature() {
               {selected.name} confirms.
             </p>
           </div>
-          <Button
-            className="rounded-xl"
-            disabled={sent}
-            onClick={() => {
-              setSent(true);
-              toast.success(`Delegation request sent to ${selected.name}`);
-            }}
-          >
-            {sent ? <Check className="h-4 w-4" /> : <Send className="h-4 w-4" />}
-            {sent ? "Awaiting confirmation" : `Ask ${selected.name}`}
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" className="rounded-xl" asChild>
+              <Link to="/circle">
+                <UsersRound className="h-4 w-4" /> Open Capacity Circle
+              </Link>
+            </Button>
+            <Button
+              className="rounded-xl"
+              disabled={sent}
+              onClick={() => {
+                setSent(true);
+                toast.success(`Delegation request sent to ${selected.name}`);
+              }}
+            >
+              {sent ? <Check className="h-4 w-4" /> : <Send className="h-4 w-4" />}
+              {sent ? "Awaiting confirmation" : `Ask ${selected.name}`}
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

@@ -10,6 +10,7 @@ import {
   LineChart,
   Settings as SettingsIcon,
   Sparkles,
+  UsersRound,
   WandSparkles,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -21,6 +22,7 @@ import { DecisionJourney } from "@/components/loadless/decision-journey";
 const primaryNav = [
   { to: "/", label: "Dashboard", short: "Home", icon: Gauge },
   { to: "/tasks", label: "Commitments", short: "Tasks", icon: ListTodo },
+  { to: "/circle", label: "Capacity Circle", short: "Circle", icon: UsersRound },
   { to: "/check-in", label: "60-sec Check-in", short: "Check-in", icon: HeartPulse },
   { to: "/hidden-load", label: "Hidden Load", short: "Inbox", icon: Inbox },
   { to: "/sandbox", label: "Sandbox", short: "Sandbox", icon: FlaskConical },
@@ -128,7 +130,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </div>
 
       <nav
-        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-6 border-t border-border bg-card/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-7 border-t border-border bg-card/95 px-1 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
         aria-label="Main"
       >
         {primaryNav.map((item) => (
@@ -136,7 +138,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             key={item.to}
             to={item.to}
             className={cn(
-              "flex flex-col items-center gap-1 py-2.5 text-[10px] font-medium transition-colors",
+              "flex min-w-0 flex-col items-center gap-1 py-2.5 text-[9px] font-medium transition-colors sm:text-[10px]",
               isActive(item.to) ? "text-primary" : "text-muted-foreground",
             )}
           >
