@@ -75,14 +75,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "LoadLess — Know your capacity before you say yes" },
+      { title: "Easey — Know your capacity before you say yes" },
       {
         name: "description",
         content:
-          "LoadLess helps university students see their real weekly workload, simulate a new commitment, and act before overload.",
+          "Easey helps university students see their real weekly workload, simulate a new commitment, and act before overload.",
       },
-      { name: "author", content: "LoadLess" },
-      { property: "og:title", content: "LoadLess — Know your capacity before you say yes" },
+      { name: "author", content: "Easey" },
+      { property: "og:title", content: "Easey — Know your capacity before you say yes" },
       {
         property: "og:description",
         content:

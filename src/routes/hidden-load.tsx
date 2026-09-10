@@ -36,7 +36,7 @@ export const Route = createFileRoute("/hidden-load")({
         content:
           "Paste a message from WhatsApp, email or your LMS and turn the hidden request inside it into a commitment you can check.",
       },
-      { property: "og:title", content: "Hidden Load Inbox — LoadLess" },
+      { property: "og:title", content: "Hidden Load Inbox — Easey" },
       {
         property: "og:description",
         content: "Turn a casual message into a clear commitment before you agree to it.",
@@ -91,7 +91,7 @@ function HiddenLoad() {
       <PageHeader
         eyebrow="Hidden load"
         title="Hidden Load Inbox"
-        description="Requests rarely arrive as calendar invites. Paste the message and LoadLess will pull out the commitment hiding inside it."
+        description="Requests rarely arrive as calendar invites. Paste the message and Easey will pull out the commitment hiding inside it."
       />
 
       <Card className="rounded-2xl border-border shadow-soft">

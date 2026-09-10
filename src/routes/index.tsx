@@ -50,7 +50,7 @@ export const Route = createFileRoute("/")({
         content:
           "See Aina's weekly capacity at a glance: load by category, the busiest day, and what is coming up next.",
       },
-      { property: "og:title", content: "Capacity Dashboard — LoadLess" },
+      { property: "og:title", content: "Capacity Dashboard — Easey" },
       {
         property: "og:description",
         content: "Your weekly capacity, load categories and upcoming commitments in one calm view.",

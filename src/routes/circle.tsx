@@ -2,15 +2,21 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   BellRing,
   Check,
+  ClipboardCheck,
   CirclePlus,
   Clock3,
+  FileCheck2,
   Eye,
   EyeOff,
   HandHelping,
+  ListChecks,
   LockKeyhole,
+  MessageSquareText,
+  RotateCcw,
   Send,
   ShieldCheck,
   Sparkles,
+  Upload,
   UserPlus,
   UsersRound,
 } from "lucide-react";
@@ -41,6 +47,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import { labelFor, levelFor } from "@/data/loadless";
 import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
 import { cn } from "@/lib/utils";
@@ -81,6 +88,77 @@ type HelpTask = {
   hours: number;
   bestMatches: string[];
 };
+
+type WorkStatus = "To do" | "In progress" | "Submitted" | "Needs changes" | "Approved";
+
+type AssignmentPart = {
+  id: string;
+  title: string;
+  assigneeId: string;
+  deadline: string;
+  hours: number;
+  capacityPoints: number;
+  progress: number;
+  status: WorkStatus;
+  submission: string | null;
+  leaderComment: string | null;
+  updated: string;
+};
+
+const initialAssignmentParts: AssignmentPart[] = [
+  {
+    id: "part-research",
+    title: "Sponsor and user research",
+    assigneeId: "faiz",
+    deadline: "11 Sep",
+    hours: 2,
+    capacityPoints: 13,
+    progress: 100,
+    status: "Submitted",
+    submission: "Research findings · v1",
+    leaderComment: null,
+    updated: "Today, 10:20",
+  },
+  {
+    id: "part-slides",
+    title: "Presentation visual design",
+    assigneeId: "jia",
+    deadline: "12 Sep",
+    hours: 3,
+    capacityPoints: 16,
+    progress: 72,
+    status: "In progress",
+    submission: null,
+    leaderComment: "Keep the capacity journey on one slide and enlarge the forecast number.",
+    updated: "Today, 09:05",
+  },
+  {
+    id: "part-references",
+    title: "Report references and appendix",
+    assigneeId: "daniel",
+    deadline: "12 Sep",
+    hours: 1,
+    capacityPoints: 6,
+    progress: 100,
+    status: "Approved",
+    submission: "Reference list · checked",
+    leaderComment: "Approved. Citation format is consistent.",
+    updated: "Yesterday, 18:40",
+  },
+  {
+    id: "part-conclusion",
+    title: "Final conclusion and demo handoff",
+    assigneeId: "aina",
+    deadline: "13 Sep",
+    hours: 1.5,
+    capacityPoints: 8,
+    progress: 35,
+    status: "In progress",
+    submission: null,
+    leaderComment: null,
+    updated: "Yesterday, 16:15",
+  },
+];
 
 const helpTasks: HelpTask[] = [
   {
@@ -202,6 +280,11 @@ function CapacityCircle() {
     loadCategories: true,
     recoveryStatus: false,
   });
+  const [assignmentParts, setAssignmentParts] = useState(initialAssignmentParts);
+  const [reviewDialogOpen, setReviewDialogOpen] = useState(false);
+  const [reviewPartId, setReviewPartId] = useState(initialAssignmentParts[0]!.id);
+  const [reviewDecision, setReviewDecision] = useState<"Approved" | "Needs changes">("Approved");
+  const [reviewDraft, setReviewDraft] = useState("");
 
   const members = useMemo(
     () =>
@@ -249,11 +332,88 @@ function CapacityCircle() {
   const availableMembers = members.filter(
     (member) => member.id !== "aina" && member.acceptsHelpRequests && member.capacity < 80,
   ).length;
+  const teamProgress = Math.round(
+    assignmentParts.reduce((total, part) => total + part.progress, 0) / assignmentParts.length,
+  );
+  const approvedParts = assignmentParts.filter((part) => part.status === "Approved").length;
+  const selectedReviewPart =
+    assignmentParts.find((part) => part.id === reviewPartId) ?? assignmentParts[0]!;
 
   const openHelpDialog = () => {
     setTaskId("research");
     setSelectedMemberId("faiz");
     setHelpDialogOpen(true);
+  };
+
+  const openHelpForPart = (part: AssignmentPart) => {
+    const matchingTask = part.id.includes("reference")
+      ? "references"
+      : part.id.includes("slide")
+        ? "slides"
+        : "research";
+    setTaskId(matchingTask);
+    setSelectedMemberId("");
+    setHelpDialogOpen(true);
+  };
+
+  const openReview = (part: AssignmentPart) => {
+    setReviewPartId(part.id);
+    setReviewDecision(part.status === "Needs changes" ? "Needs changes" : "Approved");
+    setReviewDraft(part.leaderComment ?? "");
+    setReviewDialogOpen(true);
+  };
+
+  const submitPart = (part: AssignmentPart) => {
+    setAssignmentParts((current) =>
+      current.map((item) =>
+        item.id === part.id
+          ? {
+              ...item,
+              progress: 100,
+              status: "Submitted",
+              submission: item.submission ?? `${item.title} · latest draft`,
+              updated: "Just now",
+            }
+          : item,
+      ),
+    );
+    toast.success(`${part.title} submitted for review`);
+  };
+
+  const saveReview = () => {
+    setAssignmentParts((current) =>
+      current.map((part) =>
+        part.id === selectedReviewPart.id
+          ? {
+              ...part,
+              status: reviewDecision,
+              progress: reviewDecision === "Approved" ? 100 : part.progress,
+              leaderComment: reviewDraft.trim() || null,
+              updated: "Just now",
+            }
+          : part,
+      ),
+    );
+    setReviewDialogOpen(false);
+    toast.success(
+      reviewDecision === "Approved" ? "Part approved" : "Revision request sent to the member",
+    );
+  };
+
+  const copyContributionSummary = async () => {
+    const summary = assignmentParts
+      .map((part) => {
+        const member = members.find((item) => item.id === part.assigneeId);
+        return `${member?.name ?? "Member"}: ${part.title} — ${part.status} (${part.progress}%)`;
+      })
+      .join("\n");
+
+    try {
+      await navigator.clipboard.writeText(summary);
+      toast.success("Contribution summary copied for the report");
+    } catch {
+      toast.error("Could not copy the summary");
+    }
   };
 
   return (
@@ -406,6 +566,182 @@ function CapacityCircle() {
       ) : null}
 
       <section className="space-y-3">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-lg font-bold tracking-tight">Assignment Workboard</h2>
+              <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-semibold text-muted-foreground">
+                Interactive demo · local data
+              </span>
+            </div>
+            <p className="mt-1 text-sm text-muted-foreground">
+              See who owns each part, what has been submitted, and what feedback is still needed.
+            </p>
+          </div>
+          <div className="min-w-44 rounded-xl border border-border bg-card px-4 py-3 shadow-soft">
+            <div className="flex items-center justify-between gap-4 text-xs">
+              <span className="text-muted-foreground">Team progress</span>
+              <strong className="tabular-nums">{teamProgress}%</strong>
+            </div>
+            <Progress value={teamProgress} className="mt-2 h-2" />
+          </div>
+        </div>
+
+        <div className="grid gap-4 xl:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.55fr)]">
+          <Card className="rounded-2xl border-border shadow-soft">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <ListChecks className="h-4 w-4" /> Assigned parts
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {assignmentParts.map((part) => {
+                const assignee = members.find((member) => member.id === part.assigneeId);
+                const isMine = part.assigneeId === "aina";
+
+                return (
+                  <div key={part.id} className="rounded-2xl border border-border bg-background p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <p className="font-semibold">{part.title}</p>
+                          <span
+                            className={cn(
+                              "rounded-full px-2.5 py-1 text-[10px] font-bold",
+                              workStatusClass(part.status),
+                            )}
+                          >
+                            {part.status}
+                          </span>
+                        </div>
+                        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                          <span>
+                            {assignee?.name ?? "Unassigned"}
+                            {isMine ? " · You" : ""}
+                          </span>
+                          <span>Due {part.deadline}</span>
+                          <span>{part.hours} h</span>
+                          <span>+{part.capacityPoints} capacity pts</span>
+                        </div>
+                      </div>
+                      <span className="text-xs font-semibold tabular-nums text-muted-foreground">
+                        {part.progress}%
+                      </span>
+                    </div>
+                    <Progress value={part.progress} className="mt-3 h-1.5" />
+
+                    {part.submission || part.leaderComment ? (
+                      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                        {part.submission ? (
+                          <div className="flex items-start gap-2 rounded-xl bg-secondary/60 p-3">
+                            <FileCheck2 className="mt-0.5 h-4 w-4 shrink-0 text-positive" />
+                            <div>
+                              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                Submission
+                              </p>
+                              <p className="mt-1 text-xs font-medium">{part.submission}</p>
+                            </div>
+                          </div>
+                        ) : null}
+                        {part.leaderComment ? (
+                          <div className="flex items-start gap-2 rounded-xl bg-secondary/60 p-3">
+                            <MessageSquareText className="mt-0.5 h-4 w-4 shrink-0" />
+                            <div>
+                              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                                Leader comment
+                              </p>
+                              <p className="mt-1 line-clamp-2 text-xs leading-relaxed">
+                                {part.leaderComment}
+                              </p>
+                            </div>
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : null}
+
+                    <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-[11px] text-muted-foreground">
+                        Updated {part.updated}
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {isMine && !["Submitted", "Approved"].includes(part.status) ? (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="h-8 rounded-lg"
+                            onClick={() => submitPart(part)}
+                          >
+                            <Upload className="h-3.5 w-3.5" /> Submit part
+                          </Button>
+                        ) : null}
+                        <Button
+                          size="sm"
+                          variant={part.status === "Submitted" ? "default" : "outline"}
+                          className="h-8 rounded-lg"
+                          onClick={() => openReview(part)}
+                        >
+                          <MessageSquareText className="h-3.5 w-3.5" />
+                          {part.status === "Submitted"
+                            ? "Review submission"
+                            : part.status === "Approved"
+                              ? "View review"
+                              : "Add comment"}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </CardContent>
+          </Card>
+
+          <Card className="h-fit rounded-2xl border-positive/30 shadow-soft">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <ClipboardCheck className="h-4 w-4 text-positive" /> Contribution record
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                A factual activity trail for team check-ins and the assignment report.
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-3 gap-2">
+                <ContributionStat value={assignmentParts.length} label="Assigned" />
+                <ContributionStat value={approvedParts} label="Approved" />
+                <ContributionStat value={1} label="Helped" />
+              </div>
+              <div className="space-y-3 border-l border-border pl-4">
+                {[
+                  "Faiz submitted sponsor and user research",
+                  "Aina reviewed the reference list",
+                  "Jia updated presentation visuals to 72%",
+                ].map((event, index) => (
+                  <div key={event} className="relative">
+                    <span className="absolute -left-[1.19rem] top-1.5 h-2 w-2 rounded-full bg-positive" />
+                    <p className="text-xs font-medium leading-relaxed">{event}</p>
+                    <p className="mt-0.5 text-[11px] text-muted-foreground">
+                      {index === 0 ? "Today, 10:20" : index === 1 ? "Yesterday" : "2 days ago"}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <Button
+                variant="outline"
+                className="w-full rounded-xl"
+                onClick={copyContributionSummary}
+              >
+                <ClipboardCheck className="h-4 w-4" /> Copy report summary
+              </Button>
+              <p className="text-[11px] leading-relaxed text-muted-foreground">
+                Records show actions and deliverables, not a score or ranking of people. Members can
+                view the same history.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-bold tracking-tight">Circle members</h2>
@@ -504,13 +840,112 @@ function CapacityCircle() {
                 <ShieldCheck className="h-4 w-4 text-positive" /> No automatic dumping
               </p>
               <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                LoadLess recommends and notifies. The teammate still decides whether to accept,
-                reduce or decline the request.
+                Easey recommends and notifies. The teammate still decides whether to accept, reduce
+                or decline the request.
               </p>
             </div>
           </CardContent>
         </Card>
       </div>
+
+      <Dialog open={reviewDialogOpen} onOpenChange={setReviewDialogOpen}>
+        <DialogContent className="max-h-[90vh] overflow-y-auto rounded-2xl sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Review assignment part</DialogTitle>
+            <DialogDescription>
+              Comment on the work itself and make the next action clear. This record is visible to
+              the assigned member.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-2">
+            <div className="rounded-2xl border border-border bg-secondary/50 p-4">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <p className="font-semibold">{selectedReviewPart.title}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {members.find((member) => member.id === selectedReviewPart.assigneeId)?.name} ·
+                    Due {selectedReviewPart.deadline}
+                  </p>
+                </div>
+                <span
+                  className={cn(
+                    "rounded-full px-2.5 py-1 text-[10px] font-bold",
+                    workStatusClass(selectedReviewPart.status),
+                  )}
+                >
+                  {selectedReviewPart.status}
+                </span>
+              </div>
+              <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+                <FileCheck2 className="h-4 w-4" />
+                {selectedReviewPart.submission ?? "No file or link submitted yet"}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="review-decision">Review decision</Label>
+              <Select
+                value={reviewDecision}
+                onValueChange={(value) => setReviewDecision(value as "Approved" | "Needs changes")}
+              >
+                <SelectTrigger id="review-decision" className="h-10 rounded-xl">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Approved">Approve this part</SelectItem>
+                  <SelectItem value="Needs changes">Request changes</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="leader-comment">Leader comment</Label>
+              <Textarea
+                id="leader-comment"
+                value={reviewDraft}
+                onChange={(event) => setReviewDraft(event.target.value)}
+                placeholder="Describe what is clear, what should change, and the expected next step."
+                className="min-h-28 rounded-xl"
+              />
+              <p className="text-xs text-muted-foreground">
+                Keep feedback specific to the deliverable. Avoid ranking or judging the person.
+              </p>
+            </div>
+
+            {reviewDecision === "Needs changes" ? (
+              <div className="rounded-xl border border-warning/40 bg-warning-soft/55 p-4">
+                <p className="flex items-center gap-2 text-sm font-semibold text-warning-foreground">
+                  <RotateCcw className="h-4 w-4" /> Check revision capacity first
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-warning-foreground">
+                  A revision may add about {selectedReviewPart.capacityPoints} capacity points. If
+                  the member has no room, split the revision or request help instead of silently
+                  extending their load.
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-3 rounded-lg bg-card"
+                  onClick={() => {
+                    setReviewDialogOpen(false);
+                    openHelpForPart(selectedReviewPart);
+                  }}
+                >
+                  <HandHelping className="h-3.5 w-3.5" /> Find revision support
+                </Button>
+              </div>
+            ) : null}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setReviewDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={saveReview}>
+              <MessageSquareText className="h-4 w-4" /> Save review
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={helpDialogOpen} onOpenChange={setHelpDialogOpen}>
         <DialogContent className="max-h-[90vh] overflow-y-auto rounded-2xl sm:max-w-2xl">
@@ -745,6 +1180,24 @@ function MemberCard({ member }: { member: CircleMember }) {
       </CardContent>
     </Card>
   );
+}
+
+function ContributionStat({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="rounded-xl bg-secondary/60 p-3 text-center">
+      <p className="text-xl font-bold tabular-nums">{value}</p>
+      <p className="mt-0.5 text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">
+        {label}
+      </p>
+    </div>
+  );
+}
+
+function workStatusClass(status: WorkStatus) {
+  if (status === "Approved") return "bg-positive-soft text-positive";
+  if (status === "Submitted") return "bg-primary text-primary-foreground";
+  if (status === "Needs changes") return "bg-warning-soft text-warning-foreground";
+  return "bg-secondary text-muted-foreground";
 }
 
 function SharingRow({

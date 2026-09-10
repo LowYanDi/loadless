@@ -18,7 +18,7 @@ export const Route = createFileRoute("/boundary")({
         content:
           "A ready-to-send message that offers real help, states a clear limit, and protects the capacity you just recovered.",
       },
-      { property: "og:title", content: "Boundary Assistant — LoadLess" },
+      { property: "og:title", content: "Boundary Assistant — Easey" },
       {
         property: "og:description",
         content: "Say yes to part of it, and no to the part that would break your week.",

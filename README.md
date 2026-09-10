@@ -1,6 +1,6 @@
-# LoadLess
+# Easey
 
-LoadLess is a mobile-first student capacity and commitment decision assistant. It helps a student see their combined weekly load, test the impact of a new request, and choose a realistic action before overload happens.
+Easey is a mobile-first student capacity and commitment decision assistant. It helps a student see their combined weekly load, test the impact of a new request, coordinate assignment work, and choose a realistic action before overload happens.
 
 **Tagline:** Know your capacity before you say yes.
 
@@ -12,6 +12,8 @@ LoadLess is a mobile-first student capacity and commitment decision assistant. I
 4. Action Engine explains three possible trade-offs and traces their effect through a decision impact ladder.
 5. Boundary Assistant creates an editable message to rescope the request.
 6. After State shows the confirmed plan reducing capacity to 84% and produces a copyable decision receipt.
+7. Capacity Circle connects workload visibility with assignment ownership, submission review, leader comments and consent-based help matching.
+8. Reset Mode offers Tic-Tac-Toe, unlimited personalised music and a capacity-adaptive Focus Cycle.
 
 The demo uses realistic local data. It does not access WhatsApp, diagnose mental health conditions, or send information to a backend.
 
@@ -68,6 +70,10 @@ Changing any Scenario Lab control updates the calculation and charts immediately
 - **Decision Impact Ladder:** shows how each recommendation creates room from 113% to 84%.
 - **Decision Receipt:** turns the final plan into a useful copyable/downloadable record.
 - **Decision Journey:** keeps the five-step intervention visible from capture through recovery.
+- **Assignment Workboard:** shows who owns each assignment part, its progress, submission and leader review without ranking people.
+- **Contribution Record:** creates a copyable factual summary for group check-ins and the assignment report.
+- **Capacity-adaptive Focus Cycle:** recommends 15/5, 25/5 or 45/10 focus rhythms based on current capacity while allowing user override.
+- **Personalised Music:** demonstrates interest-based recommendations, a user-controlled player and an optional reminder with no forced limit.
 
 ## Project structure
 
@@ -91,9 +97,9 @@ Create an empty repository on GitHub without adding a README, `.gitignore`, or l
 ```bash
 git init
 git add .
-git commit -m "Initial LoadLess prototype"
+git commit -m "Initial Easey prototype"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/loadless.git
+git remote add origin https://github.com/YOUR_USERNAME/easey.git
 git push -u origin main
 ```
 
@@ -103,7 +109,7 @@ Invite teammates from the repository's **Settings -> Collaborators** page.
 
 1. Sign in to Vercel with GitHub.
 2. Choose **Add New -> Project**.
-3. Import the new LoadLess repository.
+3. Import the new Easey repository.
 4. Keep the detected framework and build settings.
 5. Select **Deploy**.
 

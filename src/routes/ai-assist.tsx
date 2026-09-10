@@ -106,8 +106,8 @@ function InnovationLab() {
               <div>
                 <CardTitle className="text-lg">Hi! I’m Easey.</CardTitle>
                 <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                  Ask me anything about your workload, commitments, capacity,
-                  or how to find a better balance.
+                  Ask me anything about your workload, commitments, capacity, or how to find a
+                  better balance.
                 </p>
               </div>
             </div>
@@ -149,10 +149,9 @@ function InnovationLab() {
                 <div className="space-y-2">
                   <p className="text-sm font-semibold">Easey AI</p>
                   <p className="text-sm leading-relaxed text-muted-foreground">
-                    Your current capacity is already relatively high. Before
-                    accepting another commitment, consider whether it affects
-                    your busiest day, removes recovery time, or pushes another
-                    important task later.
+                    Your current capacity is already relatively high. Before accepting another
+                    commitment, consider whether it affects your busiest day, removes recovery time,
+                    or pushes another important task later.
                   </p>
 
                   <div className="mt-3 rounded-xl border border-border bg-background p-3">
@@ -160,8 +159,8 @@ function InnovationLab() {
                       Recommended next step
                     </p>
                     <p className="mt-1 text-sm font-medium">
-                      Try the Commitment Sandbox first, then review the Action Plan
-                      if the projected load becomes too high.
+                      Try the Commitment Sandbox first, then review the Action Plan if the projected
+                      load becomes too high.
                     </p>
                   </div>
                 </div>
@@ -203,26 +202,11 @@ function InnovationLab() {
             </CardHeader>
 
             <CardContent className="space-y-3">
-              <ContextRow
-                label="Capacity"
-                value={`${currentCapacity}%`}
-              />
-              <ContextRow
-                label="Highest-load day"
-                value="Wednesday"
-              />
-              <ContextRow
-                label="Active commitments"
-                value="5"
-              />
-              <ContextRow
-                label="Hidden loads"
-                value="2"
-              />
-              <ContextRow
-                label="Recovery debt"
-                value="4.5 h"
-              />
+              <ContextRow label="Capacity" value={`${currentCapacity}%`} />
+              <ContextRow label="Highest-load day" value="Wednesday" />
+              <ContextRow label="Active commitments" value="5" />
+              <ContextRow label="Hidden loads" value="2" />
+              <ContextRow label="Recovery debt" value="4.5 h" />
             </CardContent>
           </Card>
 
@@ -263,13 +247,7 @@ function InnovationLab() {
   );
 }
 
-function ContextRow({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
+function ContextRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between rounded-xl bg-secondary/50 px-3 py-2.5">
       <span className="text-sm text-muted-foreground">{label}</span>
@@ -891,7 +869,7 @@ function AssistantFeature() {
       return "Aina has deferred three recovery blocks, creating 4.5 hours of recovery debt. Protecting Friday 7:00–8:00 PM is the smallest immediate repair.";
     }
     if (lower.includes("faiz") || lower.includes("delegate") || lower.includes("team")) {
-      return "Faiz is the safest demo match: 58% now and 71% after the research hand-off. LoadLess still waits for his confirmation before moving the work.";
+      return "Faiz is the safest demo match: 58% now and 71% after the research hand-off. Easey still waits for his confirmation before moving the work.";
     }
     if (lower.includes("message") || lower.includes("mei") || lower.includes("reply")) {
       return "Offer a smaller yes: commit to the outline and first five slides, ask someone else to own research, and state the Wednesday limit clearly.";
@@ -925,7 +903,7 @@ function AssistantFeature() {
         <CardHeader className="border-b border-border bg-primary text-primary-foreground sm:flex-row sm:items-center sm:justify-between">
           <div>
             <CardTitle className="flex items-center gap-2 text-base">
-              <Bot className="h-4 w-4" /> Ask LoadLess
+              <Bot className="h-4 w-4" /> Ask Easey
             </CardTitle>
             <p className="mt-1 text-xs text-primary-foreground/70">
               Answers are grounded in the current demo scenario and visible calculations.
@@ -976,7 +954,7 @@ function AssistantFeature() {
                   if (event.key === "Enter") sendQuestion(input);
                 }}
                 placeholder="Ask about this week's capacity…"
-                aria-label="Ask LoadLess a question"
+                aria-label="Ask Easey a question"
                 className="rounded-xl"
               />
               <Button

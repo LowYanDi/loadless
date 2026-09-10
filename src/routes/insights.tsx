@@ -79,7 +79,8 @@ function Insights() {
             <div>
               <CardTitle className="text-base">Recovery Insight</CardTitle>
               <p className="mt-1 text-sm text-muted-foreground">
-                Recovery debt keeps track of planned recovery time that was repeatedly displaced by other commitments.
+                Recovery debt keeps track of planned recovery time that was repeatedly displaced by
+                other commitments.
               </p>
             </div>
           </div>
@@ -88,42 +89,30 @@ function Insights() {
         <CardContent className="space-y-5">
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="rounded-xl border border-border bg-card p-4">
-              <p className="text-xs font-medium text-muted-foreground">
-                Current recovery debt
-              </p>
+              <p className="text-xs font-medium text-muted-foreground">Current recovery debt</p>
               <p className="mt-1 text-2xl font-bold tabular-nums">4.5 h</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Carried into this week
-              </p>
+              <p className="mt-1 text-xs text-muted-foreground">Carried into this week</p>
             </div>
 
             <div className="rounded-xl border border-border bg-card p-4">
-              <p className="text-xs font-medium text-muted-foreground">
-                Deferred recovery blocks
-              </p>
+              <p className="text-xs font-medium text-muted-foreground">Deferred recovery blocks</p>
               <p className="mt-1 text-2xl font-bold tabular-nums">3</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Planned breaks were displaced
-              </p>
+              <p className="mt-1 text-xs text-muted-foreground">Planned breaks were displaced</p>
             </div>
 
             <div className="rounded-xl border border-border bg-card p-4">
-              <p className="text-xs font-medium text-muted-foreground">
-                Debt direction
-              </p>
+              <p className="text-xs font-medium text-muted-foreground">Debt direction</p>
               <p className="mt-1 text-2xl font-bold text-overload">Rising</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Increased for 2 weeks
-              </p>
+              <p className="mt-1 text-xs text-muted-foreground">Increased for 2 weeks</p>
             </div>
           </div>
 
           <div className="rounded-xl border border-border bg-card p-4">
             <p className="text-sm font-semibold">What this pattern means</p>
             <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-              Recovery time has been repeatedly pushed aside when workload becomes high.
-              Easey keeps this visible so that a new week does not automatically appear
-              fully recovered when previous recovery time was missed.
+              Recovery time has been repeatedly pushed aside when workload becomes high. Easey keeps
+              this visible so that a new week does not automatically appear fully recovered when
+              previous recovery time was missed.
             </p>
           </div>
 

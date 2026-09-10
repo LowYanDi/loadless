@@ -52,7 +52,7 @@ export const Route = createFileRoute("/sandbox")({
         content:
           "Simulate a new commitment before you accept it and see exactly what it does to your week, your busiest day and your mental load.",
       },
-      { property: "og:title", content: "Commitment Sandbox — LoadLess" },
+      { property: "og:title", content: "Commitment Sandbox — Easey" },
       {
         property: "og:description",
         content: "Try the commitment on before you say yes: 82% now, 113% if you accept as asked.",
@@ -130,83 +130,82 @@ function Sandbox() {
     comparisonData.find((day) => day.full === affectedDay)?.forecast ?? affectedDayCurrent;
 
   const dominoSteps =
-  choice === "accept"
-    ? [
-        {
-          title: `${affectedDay} becomes overloaded`,
-          detail: `${affectedDay} increases from ${affectedDayCurrent}% to ${affectedDayForecast}% after accepting the full commitment.`,
-          status: `${affectedDayForecast}% load`,
-        },
-        {
-          title: "Existing work gets squeezed",
-          detail:
-            "The new high-focus commitment competes with assignments and other existing responsibilities.",
-          status: "Higher pressure",
-        },
-        {
-          title: "Recovery space may shrink",
-          detail:
-            "Flexible recovery time may be the first thing sacrificed when the week becomes too full.",
-          status: "Recovery at risk",
-        },
-        {
-          title: "The pressure carries forward",
-          detail:
-            "Tasks that no longer fit may move into the following days, leaving less buffer for unexpected work.",
-          status: "Less buffer",
-        },
-      ]
-    : choice === "reduce"
+    choice === "accept"
       ? [
           {
-            title: `${affectedDay} stays closer to capacity`,
-            detail: `Reducing the scope limits the increase on ${affectedDay} to ${affectedDayForecast}%.`,
+            title: `${affectedDay} becomes overloaded`,
+            detail: `${affectedDay} increases from ${affectedDayCurrent}% to ${affectedDayForecast}% after accepting the full commitment.`,
             status: `${affectedDayForecast}% load`,
           },
           {
-            title: "The commitment becomes smaller",
+            title: "Existing work gets squeezed",
             detail:
-              "Only the most important part of the request is kept instead of accepting the entire workload.",
-            status: "Reduced scope",
+              "The new high-focus commitment competes with assignments and other existing responsibilities.",
+            status: "Higher pressure",
           },
           {
-            title: "Some work can be shared",
+            title: "Recovery space may shrink",
             detail:
-              "A flexible part of the work can be delegated or moved instead of being carried by one person.",
-            status: "Shared load",
+              "Flexible recovery time may be the first thing sacrificed when the week becomes too full.",
+            status: "Recovery at risk",
           },
           {
-            title: "Recovery space is better protected",
+            title: "The pressure carries forward",
             detail:
-              "Reducing the commitment leaves more room for existing work and recovery.",
-            status: "More buffer",
+              "Tasks that no longer fit may move into the following days, leaving less buffer for unexpected work.",
+            status: "Less buffer",
           },
         ]
-      : [
-          {
-            title: `${affectedDay} stays unchanged`,
-            detail: `Declining the request keeps ${affectedDay} at ${affectedDayCurrent}%.`,
-            status: `${affectedDayCurrent}% load`,
-          },
-          {
-            title: "Existing tasks stay in place",
-            detail:
-              "Assignments and planned commitments do not need to be pushed into another day.",
-            status: "Protected",
-          },
-          {
-            title: "Recovery remains available",
-            detail:
-              "No additional workload is added, so existing recovery time can remain protected.",
-            status: "Protected",
-          },
-          {
-            title: "The week keeps its buffer",
-            detail:
-              "Available capacity remains for unexpected academic, social or personal responsibilities.",
-            status: "Buffer kept",
-          },
-        ];
+      : choice === "reduce"
+        ? [
+            {
+              title: `${affectedDay} stays closer to capacity`,
+              detail: `Reducing the scope limits the increase on ${affectedDay} to ${affectedDayForecast}%.`,
+              status: `${affectedDayForecast}% load`,
+            },
+            {
+              title: "The commitment becomes smaller",
+              detail:
+                "Only the most important part of the request is kept instead of accepting the entire workload.",
+              status: "Reduced scope",
+            },
+            {
+              title: "Some work can be shared",
+              detail:
+                "A flexible part of the work can be delegated or moved instead of being carried by one person.",
+              status: "Shared load",
+            },
+            {
+              title: "Recovery space is better protected",
+              detail: "Reducing the commitment leaves more room for existing work and recovery.",
+              status: "More buffer",
+            },
+          ]
+        : [
+            {
+              title: `${affectedDay} stays unchanged`,
+              detail: `Declining the request keeps ${affectedDay} at ${affectedDayCurrent}%.`,
+              status: `${affectedDayCurrent}% load`,
+            },
+            {
+              title: "Existing tasks stay in place",
+              detail:
+                "Assignments and planned commitments do not need to be pushed into another day.",
+              status: "Protected",
+            },
+            {
+              title: "Recovery remains available",
+              detail:
+                "No additional workload is added, so existing recovery time can remain protected.",
+              status: "Protected",
+            },
+            {
+              title: "The week keeps its buffer",
+              detail:
+                "Available capacity remains for unexpected academic, social or personal responsibilities.",
+              status: "Buffer kept",
+            },
+          ];
 
   return (
     <div className="space-y-6">
@@ -456,7 +455,8 @@ function Sandbox() {
             </CardTitle>
 
             <p className="mt-1 text-sm text-muted-foreground">
-              See how this decision may affect the rest of your week — not just the final percentage.
+              See how this decision may affect the rest of your week — not just the final
+              percentage.
             </p>
           </div>
 
@@ -478,18 +478,14 @@ function Sandbox() {
               <div key={step.title} className="relative">
                 <div className="h-full rounded-xl border border-border bg-background p-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-muted-foreground">
-                      0{index + 1}
-                    </span>
+                    <span className="text-xs font-bold text-muted-foreground">0{index + 1}</span>
 
                     <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-semibold">
                       {step.status}
                     </span>
                   </div>
 
-                  <p className="mt-3 text-sm font-semibold">
-                    {step.title}
-                  </p>
+                  <p className="mt-3 text-sm font-semibold">{step.title}</p>
 
                   <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                     {step.detail}

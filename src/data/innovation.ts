@@ -30,7 +30,7 @@ export const innovationFeatures = [
   {
     id: "assistant" as const,
     label: "Ask AI",
-    title: "Ask LoadLess",
+    title: "Ask Easey",
     description: "Ask questions about the current scenario and receive grounded explanations.",
   },
   {

@@ -1,4 +1,4 @@
-# LoadLess 本地开发、GitHub 与 Vercel 指南
+# Easey 本地开发、GitHub 与 Vercel 指南
 
 ## 1. 安装工具
 
@@ -13,11 +13,11 @@
 
 ## 2. 在 Visual Studio Code 打开项目
 
-1. 解压你下载的 LoadLess ZIP 文件。
-2. 将资料夹改名为 `loadless`。
+1. 解压你下载的 Easey ZIP 文件。
+2. 将资料夹改名为 `easey`。
 3. 打开 Visual Studio Code。
 4. 选择 **File -> Open Folder**。
-5. 选择刚才的 `loadless` 资料夹。
+5. 选择刚才的 `easey` 资料夹。
 6. 选择 **Terminal -> New Terminal**。
 
 在 Terminal 输入：
@@ -35,7 +35,7 @@ npm run dev
 
 1. 登入 GitHub。
 2. 点击右上角 `+`，选择 **New repository**。
-3. Repository name 输入 `loadless`。
+3. Repository name 输入 `easey`。
 4. 选择 Private 或 Public。
 5. 不要勾选 README、`.gitignore` 或 licence，因为项目里已经有这些文件。
 6. 点击 **Create repository**。
@@ -45,9 +45,9 @@ npm run dev
 ```bash
 git init
 git add .
-git commit -m "Initial LoadLess prototype"
+git commit -m "Initial Easey prototype"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/loadless.git
+git remote add origin https://github.com/YOUR_USERNAME/easey.git
 git push -u origin main
 ```
 
@@ -55,7 +55,7 @@ git push -u origin main
 
 ## 4. 邀请组员
 
-1. 打开 GitHub 的 `loadless` repository。
+1. 打开 GitHub 的 `easey` repository。
 2. 进入 **Settings -> Collaborators**。
 3. 选择 **Add people**。
 4. 输入组员的 GitHub username 或 email。
@@ -63,8 +63,8 @@ git push -u origin main
 组员接受邀请后，可以使用：
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/loadless.git
-cd loadless
+git clone https://github.com/YOUR_USERNAME/easey.git
+cd easey
 npm install
 npm run dev
 ```
@@ -88,7 +88,7 @@ git pull
 
 1. 使用 GitHub 登入 Vercel。
 2. 选择 **Add New -> Project**。
-3. 找到并 Import `loadless` repository。
+3. 找到并 Import `easey` repository。
 4. 保留 Vercel 自动检测的设置。
 5. 点击 **Deploy**。
 

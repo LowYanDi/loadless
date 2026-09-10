@@ -145,7 +145,7 @@ function CheckInPage() {
           <div>
             <p className="text-sm font-semibold">What changes the score?</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Lower energy, less sleep and higher stress reduce usable capacity. LoadLess uses these
+              Lower energy, less sleep and higher stress reduce usable capacity. Easey uses these
               inputs as a transparent planning adjustment, not a medical assessment.
             </p>
           </div>

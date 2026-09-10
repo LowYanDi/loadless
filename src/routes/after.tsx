@@ -30,13 +30,13 @@ import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
 export const Route = createFileRoute("/after")({
   head: () => ({
     meta: [
-      { title: "Your week, recovered — LoadLess" },
+      { title: "Your week, recovered — Easey" },
       {
         name: "description",
         content:
           "From 113% to 84%: the confirmed actions, the capacity you got back, and a short recovery block to protect it.",
       },
-      { property: "og:title", content: "Your week, recovered — LoadLess" },
+      { property: "og:title", content: "Your week, recovered — Easey" },
       {
         property: "og:description",
         content: "Capacity reduced by 29% and back within a realistic range.",
@@ -76,7 +76,7 @@ function AfterState() {
     const href = URL.createObjectURL(file);
     const anchor = document.createElement("a");
     anchor.href = href;
-    anchor.download = "loadless-decision-receipt.txt";
+    anchor.download = "easey-decision-receipt.txt";
     anchor.click();
     URL.revokeObjectURL(href);
     toast.success("Decision receipt downloaded");
