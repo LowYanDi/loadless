@@ -1,4 +1,3 @@
-import { AlertTriangle, CheckCircle2, TriangleAlert } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { LoadLevel } from "@/data/loadless";
 
@@ -8,10 +7,10 @@ const styles: Record<LoadLevel, string> = {
   overload: "bg-overload-soft text-overload border-overload/30",
 };
 
-const icons: Record<LoadLevel, typeof CheckCircle2> = {
-  healthy: CheckCircle2,
-  caution: AlertTriangle,
-  overload: TriangleAlert,
+const faces: Record<LoadLevel, string> = {
+  healthy: "😊",
+  caution: "😮‍💨",
+  overload: "😭",
 };
 
 export function StatusPill({
@@ -23,7 +22,6 @@ export function StatusPill({
   label: string;
   className?: string;
 }) {
-  const Icon = icons[level];
   return (
     <span
       className={cn(
@@ -32,7 +30,9 @@ export function StatusPill({
         className,
       )}
     >
-      <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+      <span className="emoji-sticker text-sm" aria-hidden="true">
+        {faces[level]}
+      </span>
       {label}
     </span>
   );

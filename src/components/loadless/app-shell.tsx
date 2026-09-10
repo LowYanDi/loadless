@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { user } from "@/data/loadless";
 import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
 import { DecisionJourney } from "@/components/loadless/decision-journey";
+import { capacityMood } from "@/lib/capacity-mood";
 
 const primaryNav = [
   { to: "/", label: "Dashboard", short: "Home", icon: Gauge },
@@ -42,6 +43,7 @@ const planPaths = ["/action-plan", "/boundary", "/after"];
 export function AppShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { currentCapacity } = useLoadLessDemo();
+  const mood = capacityMood(currentCapacity);
 
   const isActive = (to: string) =>
     to === "/action-plan" ? planPaths.includes(pathname) : pathname === to;
@@ -113,7 +115,10 @@ export function AppShell({ children }: { children: ReactNode }) {
             >
               <Bot className="h-4 w-4" aria-hidden="true" />
             </Link>
-            <span className="rounded-full bg-warning-soft px-3 py-1 text-xs font-semibold text-warning-foreground">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-warning-soft px-3 py-1 text-xs font-semibold text-warning-foreground">
+              <span className="emoji-sticker" aria-hidden="true">
+                {mood.emoji}
+              </span>
               {currentCapacity}% used
             </span>
           </span>

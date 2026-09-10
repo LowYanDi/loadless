@@ -40,6 +40,7 @@ import {
 } from "@/data/loadless";
 import { taskImpact, taskLoadLevel } from "@/data/tasks";
 import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
+import { capacityMood } from "@/lib/capacity-mood";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -69,6 +70,7 @@ function Dashboard() {
   const displayedWeek = completed ? updatedWeeklyLoad : weeklyLoad;
   const status = completed ? "Back within a realistic range" : labelFor(currentCapacity);
   const activeTasks = tasks.filter((task) => task.status === "pending").slice(0, 5);
+  const mood = capacityMood(currentCapacity);
 
   return (
     <div className="space-y-6">
@@ -76,10 +78,21 @@ function Dashboard() {
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
           Week 9 · Semester 1
         </p>
-        <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-          Good afternoon, {user.name}
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">Know your capacity before you say yes.</p>
+        <div className="mt-1 flex items-center gap-3">
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+            Good afternoon, {user.name}
+          </h1>
+          <span
+            className="mood-float grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-warning-soft text-2xl shadow-soft"
+            title={mood.label}
+            aria-hidden="true"
+          >
+            {mood.emoji}
+          </span>
+        </div>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {mood.label}. Know your capacity before you say yes.
+        </p>
       </header>
 
       <div className="grid gap-3 sm:grid-cols-2">

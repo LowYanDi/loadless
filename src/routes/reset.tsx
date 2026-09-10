@@ -19,6 +19,7 @@ import {
   PersonStanding,
   Play,
   RefreshCcw,
+  Scissors,
   ShieldCheck,
   SkipForward,
   Sparkles,
@@ -26,7 +27,14 @@ import {
   Volume2,
   Wind,
 } from "lucide-react";
-import { useEffect, useRef, useState, type ComponentType } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentType,
+  type CSSProperties,
+  type MutableRefObject,
+} from "react";
 import { toast } from "sonner";
 
 import { PageHeader } from "@/components/loadless/page-header";
@@ -57,7 +65,8 @@ export const Route = createFileRoute("/reset")({
   component: ResetMode,
 });
 
-type ActivityId = "focus" | "game" | "breathe" | "stretch" | "walk" | "listen" | "rest" | "connect";
+type ActivityId =
+  "focus" | "game" | "shred" | "breathe" | "stretch" | "walk" | "listen" | "rest" | "connect";
 type ResetState = "menu" | "activity" | "complete";
 type CheckInResult = "better" | "same" | "more";
 
@@ -66,6 +75,7 @@ type ActivityDefinition = {
   title: string;
   description: string;
   duration: string;
+  emoji: string;
   icon: ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
   recommended?: boolean;
   screenFree?: boolean;
@@ -77,21 +87,32 @@ const activities: ActivityDefinition[] = [
     title: "Start a Focus Cycle",
     description: "Use a focus-and-break rhythm that adapts to your current capacity.",
     duration: "Adaptive · 15–45 min",
+    emoji: "🍅",
     icon: Brain,
     recommended: true,
   },
   {
     id: "game",
-    title: "Quick Game",
-    description: "Take a short mental break with a simple game.",
+    title: "Tic-Tac-Toe",
+    description: "Take a short, no-score mental break with a familiar game.",
     duration: "1-3 min",
+    emoji: "⭕",
     icon: Gamepad2,
+  },
+  {
+    id: "shred",
+    title: "Tap & Tear",
+    description: "Tap the pretend assignment, hear it rip, then watch a fresh page return.",
+    duration: "1–2 min",
+    emoji: "📝",
+    icon: Scissors,
   },
   {
     id: "breathe",
     title: "Breathe",
     description: "Follow one slow inhale, hold and exhale cycle at a time.",
     duration: "1 min",
+    emoji: "🫧",
     icon: Wind,
   },
   {
@@ -99,6 +120,7 @@ const activities: ActivityDefinition[] = [
     title: "Stretch",
     description: "Three gentle, desk-friendly movements with no performance target.",
     duration: "3 min",
+    emoji: "🙆",
     icon: PersonStanding,
   },
   {
@@ -106,6 +128,7 @@ const activities: ActivityDefinition[] = [
     title: "Walk",
     description: "Put the screen down and take a short walk before the next decision.",
     duration: "5 min",
+    emoji: "🌿",
     icon: Footprints,
     screenFree: true,
   },
@@ -114,6 +137,7 @@ const activities: ActivityDefinition[] = [
     title: "Personalised Music",
     description: "Listen without a forced timer and keep an optional return reminder.",
     duration: "No forced limit",
+    emoji: "🎧",
     icon: Headphones,
   },
   {
@@ -121,6 +145,7 @@ const activities: ActivityDefinition[] = [
     title: "Rest",
     description: "Protect a quiet screen-free block without adding another task to complete.",
     duration: "5 min",
+    emoji: "😴",
     icon: MoonStar,
     screenFree: true,
   },
@@ -129,6 +154,7 @@ const activities: ActivityDefinition[] = [
     title: "Connect",
     description: "Send a low-pressure check-in to a person Aina trusts.",
     duration: "2 min",
+    emoji: "💬",
     icon: MessageCircle,
   },
 ];
@@ -231,7 +257,7 @@ function RecoveryMenu({
               key={activity.id}
               type="button"
               onClick={() => onSelect(activity.id)}
-              className={`group rounded-2xl border bg-card p-5 text-left shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift ${
+              className={`playful-card group rounded-2xl border bg-card p-5 text-left shadow-soft transition-all hover:-translate-y-0.5 hover:shadow-lift ${
                 activity.recommended ? "border-positive/50" : "border-border"
               }`}
             >
@@ -240,6 +266,12 @@ function RecoveryMenu({
                   <Icon className="h-5 w-5" aria-hidden={true} />
                 </span>
                 <span className="flex flex-wrap justify-end gap-1.5">
+                  <span
+                    className="emoji-sticker grid h-9 w-9 place-items-center rounded-xl bg-warning-soft text-xl"
+                    aria-hidden="true"
+                  >
+                    {activity.emoji}
+                  </span>
                   {activity.recommended ? (
                     <span className="rounded-full bg-positive-soft px-2.5 py-1 text-[11px] font-bold text-positive">
                       Recommended
@@ -311,6 +343,7 @@ function ActivityScreen({
         <FocusCycle currentCapacity={currentCapacity} onComplete={onComplete} />
       ) : null}
       {activity.id === "game" ? <TicTacToeGame onComplete={onComplete} /> : null}
+      {activity.id === "shred" ? <AssignmentShredGame onComplete={onComplete} /> : null}
       {activity.id === "breathe" ? <BreathingReset onComplete={onComplete} /> : null}
       {activity.id === "stretch" ? <StretchReset onComplete={onComplete} /> : null}
       {activity.id === "walk" ? (
@@ -692,6 +725,254 @@ function TicTacToeGame({ onComplete }: { onComplete: () => void }) {
               This game is designed as a short mental pause, not another task to complete. You can
               stop at any time and return to your week.
             </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+const paperShards = [
+  { x: -132, y: -94, rotate: -42, delay: 0 },
+  { x: -88, y: -142, rotate: 24, delay: 18 },
+  { x: -38, y: -126, rotate: -68, delay: 36 },
+  { x: 24, y: -146, rotate: 52, delay: 12 },
+  { x: 82, y: -118, rotate: -18, delay: 44 },
+  { x: 138, y: -82, rotate: 74, delay: 24 },
+  { x: -152, y: -18, rotate: 38, delay: 54 },
+  { x: 148, y: 8, rotate: -56, delay: 30 },
+  { x: -126, y: 76, rotate: -26, delay: 42 },
+  { x: -64, y: 132, rotate: 66, delay: 10 },
+  { x: 4, y: 148, rotate: -48, delay: 50 },
+  { x: 72, y: 126, rotate: 34, delay: 22 },
+  { x: 138, y: 72, rotate: -72, delay: 58 },
+  { x: -12, y: -82, rotate: 86, delay: 34 },
+];
+
+function AssignmentPaperContent() {
+  return (
+    <span className="assignment-paper-content">
+      <span className="assignment-paper-kicker">COURSEWORK</span>
+      <span className="assignment-paper-title">Final Assignment</span>
+      <span className="assignment-paper-line assignment-paper-line-long" />
+      <span className="assignment-paper-line" />
+      <span className="assignment-paper-line assignment-paper-line-short" />
+      <span className="assignment-paper-line assignment-paper-line-long" />
+      <span className="assignment-paper-line" />
+      <span className="assignment-paper-line assignment-paper-line-short" />
+      <span className="assignment-paper-stamp">DUE WEDNESDAY</span>
+    </span>
+  );
+}
+
+function playTearSound(audioContextRef: MutableRefObject<AudioContext | null>) {
+  if (typeof window === "undefined") return;
+
+  const AudioContextConstructor =
+    window.AudioContext ??
+    (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+  if (!AudioContextConstructor) return;
+
+  const audioContext = audioContextRef.current ?? new AudioContextConstructor();
+  audioContextRef.current = audioContext;
+  if (audioContext.state === "suspended") void audioContext.resume();
+
+  const duration = 0.24;
+  const sampleCount = Math.floor(audioContext.sampleRate * duration);
+  const buffer = audioContext.createBuffer(1, sampleCount, audioContext.sampleRate);
+  const channel = buffer.getChannelData(0);
+
+  for (let index = 0; index < sampleCount; index += 1) {
+    const fade = 1 - index / sampleCount;
+    const scratch = Math.random() * 2 - 1;
+    const crackle = index % 97 < 5 ? scratch * 1.8 : scratch;
+    channel[index] = crackle * fade;
+  }
+
+  const source = audioContext.createBufferSource();
+  const filter = audioContext.createBiquadFilter();
+  const gain = audioContext.createGain();
+  source.buffer = buffer;
+  filter.type = "bandpass";
+  filter.frequency.value = 1850;
+  filter.Q.value = 0.75;
+  gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.16, audioContext.currentTime + 0.012);
+  gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+  source.connect(filter);
+  filter.connect(gain);
+  gain.connect(audioContext.destination);
+  source.start();
+}
+
+function AssignmentShredGame({ onComplete }: { onComplete: () => void }) {
+  const [tearCount, setTearCount] = useState(0);
+  const [isTearing, setIsTearing] = useState(false);
+  const restoreTimerRef = useRef<number | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const tension = Math.max(20, 82 - tearCount * 4);
+  const face = tearCount === 0 ? "😣" : tearCount < 4 ? "😮‍💨" : tearCount < 8 ? "🙂" : "😊";
+
+  useEffect(
+    () => () => {
+      if (restoreTimerRef.current !== null) window.clearTimeout(restoreTimerRef.current);
+      if (audioContextRef.current) void audioContextRef.current.close();
+    },
+    [],
+  );
+
+  const tearOnce = () => {
+    if (isTearing) return;
+
+    setTearCount((current) => current + 1);
+    setIsTearing(true);
+    playTearSound(audioContextRef);
+    if (typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate(35);
+
+    restoreTimerRef.current = window.setTimeout(() => {
+      setIsTearing(false);
+      restoreTimerRef.current = null;
+    }, 720);
+  };
+
+  const resetCounter = () => {
+    if (restoreTimerRef.current !== null) window.clearTimeout(restoreTimerRef.current);
+    restoreTimerRef.current = null;
+    setIsTearing(false);
+    setTearCount(0);
+  };
+
+  return (
+    <Card className="overflow-hidden rounded-3xl border-warning/35 shadow-lift">
+      <CardContent className="tear-game-surface p-5 sm:p-7">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
+              Tap · Rip · Reset · Repeat
+            </p>
+            <h2 className="mt-1 text-xl font-bold">Tear away the pressure</h2>
+          </div>
+          <div
+            key={tearCount}
+            className="tear-counter-pop rounded-2xl border border-warning/35 bg-card/90 px-5 py-3 text-center shadow-soft"
+            aria-live="polite"
+          >
+            <span className="block text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+              Total tears
+            </span>
+            <span className="block text-3xl font-black tabular-nums text-primary">{tearCount}</span>
+          </div>
+        </div>
+
+        <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center">
+          <button
+            type="button"
+            onClick={tearOnce}
+            className={`paper-shred-stage group relative min-h-[30rem] overflow-hidden rounded-3xl border border-warning/35 p-5 text-center shadow-soft focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-warning/30 ${
+              isTearing ? "is-tearing" : ""
+            }`}
+            aria-label="Tear the pretend assignment once"
+          >
+            <span className="absolute left-5 top-5 z-30 rounded-full bg-card/90 px-3 py-1.5 text-xs font-bold text-primary shadow-soft">
+              {isTearing ? "Riiip! A fresh page is coming…" : "Tap anywhere to tear"}
+            </span>
+            <span
+              key={`${tearCount}-${isTearing}`}
+              className="emoji-sticker absolute right-5 top-4 z-30 text-3xl"
+              aria-hidden="true"
+            >
+              {face}
+            </span>
+
+            <span
+              className="relative mx-auto mt-14 block h-[22rem] w-[17rem] max-w-full"
+              aria-hidden="true"
+            >
+              <span className="assignment-paper-whole">
+                <AssignmentPaperContent />
+              </span>
+
+              <span className="assignment-paper-half assignment-paper-half-left">
+                <AssignmentPaperContent />
+              </span>
+              <span className="assignment-paper-half assignment-paper-half-right">
+                <AssignmentPaperContent />
+              </span>
+
+              {paperShards.map((shard, index) => (
+                <span
+                  key={index}
+                  className="paper-shard"
+                  style={
+                    {
+                      "--shard-x": `${shard.x}px`,
+                      "--shard-y": `${shard.y}px`,
+                      "--shard-r": `${shard.rotate}deg`,
+                      "--shard-delay": `${shard.delay}ms`,
+                    } as CSSProperties
+                  }
+                />
+              ))}
+
+              <span className="tear-burst-word">RIP!</span>
+            </span>
+
+            <span className="relative z-30 mt-3 block text-sm font-semibold">
+              {isTearing
+                ? `Tear ${tearCount} released — the pretend page will reset automatically.`
+                : tearCount === 0
+                  ? "One tap shreds the whole pretend assignment."
+                  : "Ready again. Tap for another satisfying rip."}
+            </span>
+          </button>
+
+          <div className="space-y-4">
+            <div className="rounded-2xl border border-border bg-card p-5 shadow-soft">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-sm font-semibold">Tears released</span>
+                <span className="text-2xl font-bold tabular-nums text-primary" aria-live="polite">
+                  {tearCount}
+                </span>
+              </div>
+              <div className="mt-4 flex items-center justify-between gap-3">
+                <span className="text-sm font-semibold">Playful tension check</span>
+                <span className="text-lg font-bold tabular-nums">{tension}%</span>
+              </div>
+              <Progress value={100 - tension} className="mt-2 h-2.5" />
+              <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                Each tap gives visual, sound and gentle vibration feedback. This number is playful
+                feedback only and is separate from your real capacity score.
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-positive/25 bg-positive-soft/65 p-4">
+              <p className="flex items-center gap-2 text-sm font-semibold">
+                <span className="emoji-sticker text-xl" aria-hidden="true">
+                  🫶
+                </span>
+                The real assignment is safe
+              </p>
+              <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                This is only a symbolic reset. It does not delete work, change deadlines or claim to
+                measure mental health.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                className="rounded-xl"
+                onClick={resetCounter}
+                disabled={tearCount === 0}
+              >
+                <RefreshCcw className="h-4 w-4" aria-hidden="true" />
+                Reset counter
+              </Button>
+              <Button className="rounded-xl" onClick={onComplete}>
+                Finish reset
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Button>
+            </div>
           </div>
         </div>
       </CardContent>

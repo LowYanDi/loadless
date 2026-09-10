@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { levelFor, type LoadLevel } from "@/data/loadless";
 import { useEffect, useState } from "react";
+import { capacityMood } from "@/lib/capacity-mood";
 
 const strokeFor: Record<LoadLevel, string> = {
   healthy: "var(--positive)",
@@ -20,6 +21,7 @@ export function CapacityRing({
   className?: string;
 }) {
   const level = levelFor(value);
+  const mood = capacityMood(value);
   const radius = 44;
   const circumference = 2 * Math.PI * radius;
   const [displayedValue, setDisplayedValue] = useState(0);
@@ -35,7 +37,7 @@ export function CapacityRing({
       className={cn("relative shrink-0", className)}
       style={{ width: size, height: size }}
       role="img"
-      aria-label={`Weekly capacity ${value} percent`}
+      aria-label={`Weekly capacity ${value} percent. ${mood.label}`}
     >
       <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
         <circle cx="50" cy="50" r={radius} fill="none" stroke="var(--muted)" strokeWidth="8" />
@@ -53,9 +55,14 @@ export function CapacityRing({
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-        <span className="text-4xl font-bold tabular-nums tracking-tight">{displayedValue}%</span>
-        <span className="mt-1 text-xs font-medium text-muted-foreground">
-          {caption ?? "of weekly capacity"}
+        <span className="capacity-mood-face text-3xl" aria-hidden="true">
+          {mood.emoji}
+        </span>
+        <span className="mt-0.5 text-3xl font-bold tabular-nums tracking-tight">
+          {displayedValue}%
+        </span>
+        <span className="mt-0.5 max-w-[7.5rem] text-[11px] font-semibold leading-tight text-muted-foreground">
+          {caption ?? mood.shortLabel}
         </span>
       </div>
     </div>
