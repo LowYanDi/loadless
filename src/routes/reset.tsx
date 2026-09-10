@@ -537,21 +537,6 @@ function FocusCycle({
         <Card className="rounded-2xl border-border shadow-soft">
           <CardContent className="space-y-4 p-5">
             <div className="space-y-2">
-              <label className="text-sm font-semibold" htmlFor="focus-task">
-                Assignment part
-              </label>
-              <Select value={task} onValueChange={setTask}>
-                <SelectTrigger id="focus-task" className="h-10 rounded-xl">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="slides">Presentation visual design</SelectItem>
-                  <SelectItem value="conclusion">Final conclusion and demo handoff</SelectItem>
-                  <SelectItem value="references">Reference checking</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
               <label className="text-sm font-semibold" htmlFor="focus-music">
                 Music companion
               </label>
