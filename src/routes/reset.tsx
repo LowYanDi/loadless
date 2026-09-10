@@ -2,12 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
   ArrowRight,
-  Backpack,
   Check,
   CircleCheck,
   Copy,
   ExternalLink,
   Footprints,
+  Gamepad2,
   Headphones,
   Leaf,
   MessageCircle,
@@ -27,9 +27,8 @@ import { toast } from "sonner";
 import { PageHeader } from "@/components/loadless/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { levelFor } from "@/data/loadless";
 import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
+
 
 export const Route = createFileRoute("/reset")({
   head: () => ({
@@ -45,7 +44,7 @@ export const Route = createFileRoute("/reset")({
   component: ResetMode,
 });
 
-type ActivityId = "unload" | "breathe" | "stretch" | "walk" | "listen" | "rest" | "connect";
+type ActivityId = "game" | "breathe" | "stretch" | "walk" | "listen" | "rest" | "connect";
 type ResetState = "menu" | "activity" | "complete";
 type CheckInResult = "better" | "same" | "more";
 
@@ -61,11 +60,11 @@ type ActivityDefinition = {
 
 const activities: ActivityDefinition[] = [
   {
-    id: "unload",
-    title: "Unload",
-    description: "Release the labels in a crowded backpack. Nothing needs to be solved right now.",
-    duration: "60 sec",
-    icon: Backpack,
+    id: "game",
+    title: "Quick Game",
+    description: "Take a short mental break with a simple game.",
+    duration: "1-3 min",
+    icon: Gamepad2,
     recommended: true,
   },
   {
@@ -117,7 +116,7 @@ const activities: ActivityDefinition[] = [
 function ResetMode() {
   const { currentCapacity } = useLoadLessDemo();
   const [state, setState] = useState<ResetState>("menu");
-  const [activityId, setActivityId] = useState<ActivityId>("unload");
+  const [activityId, setActivityId] = useState<ActivityId>("game");
   const [checkIn, setCheckIn] = useState<CheckInResult | null>(null);
   const activity = activities.find((item) => item.id === activityId) ?? activities[0]!;
 
@@ -187,12 +186,12 @@ function RecoveryMenu({
               {highLoad ? "Your week has very little recovery space" : "A short reset is available"}
             </p>
             <p className="mt-1 text-sm leading-relaxed text-primary-foreground/70">
-              Capacity is currently {currentCapacity}%. LoadLess recommends a short, bounded pause
+              Capacity is currently {currentCapacity}%. Easey recommends a short, bounded pause
               before the next commitment decision.
             </p>
           </div>
           <span className="w-fit rounded-full bg-primary-foreground/10 px-3 py-1.5 text-xs font-semibold">
-            Suggested · Unload
+            Suggested · Quick Game
           </span>
         </CardContent>
       </Card>
@@ -278,7 +277,7 @@ function ActivityScreen({
         </p>
       </div>
 
-      {activity.id === "unload" ? <UnloadGame onComplete={onComplete} /> : null}
+      {activity.id === "game" ? <TicTacToeGame onComplete={onComplete} /> : null}
       {activity.id === "breathe" ? <BreathingReset onComplete={onComplete} /> : null}
       {activity.id === "stretch" ? <StretchReset onComplete={onComplete} /> : null}
       {activity.id === "walk" ? (
@@ -305,117 +304,150 @@ function ActivityScreen({
   );
 }
 
-const unloadItems = [
-  { id: "deck", label: "Sponsorship deck", detail: "Can be rescoped" },
-  { id: "messages", label: "Society messages", detail: "Can wait 12 hours" },
-  { id: "research", label: "Sponsor research", detail: "Can be shared" },
-  { id: "errands", label: "Friday errands", detail: "Can move to Sunday" },
-  { id: "revision", label: "Assignment revision", detail: "Already protected" },
-  { id: "meeting", label: "Meeting notes", detail: "Good enough for now" },
+type Player = "X" | "O";
+type Cell = Player | null;
+
+const winningLines: Array<readonly [number, number, number]> = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
 ];
 
-function UnloadGame({ onComplete }: { onComplete: () => void }) {
-  const [unloaded, setUnloaded] = useState<string[]>([]);
-  const remaining = unloadItems.filter((item) => !unloaded.includes(item.id));
-  const released = unloadItems.filter((item) => unloaded.includes(item.id));
+function getWinner(board: Cell[]): Player | null {
+  for (const [a, b, c] of winningLines) {
+    const first = board[a];
 
-  const release = (id: string) => {
-    setUnloaded((current) => (current.includes(id) ? current : [...current, id]));
+    if (first && first === board[b] && first === board[c]) {
+      return first;
+    }
+  }
+
+  return null;
+}
+
+function TicTacToeGame({
+  onComplete,
+}: {
+  onComplete: () => void;
+}) {
+  const [board, setBoard] = useState<Cell[]>(Array(9).fill(null));
+  const [currentPlayer, setCurrentPlayer] = useState<Player>("X");
+
+  const winner = getWinner(board);
+  const isDraw = !winner && board.every((cell) => cell !== null);
+
+  const handleCellClick = (index: number) => {
+    if (board[index] || winner) return;
+
+    const nextBoard = [...board];
+    nextBoard[index] = currentPlayer;
+
+    setBoard(nextBoard);
+
+    if (!getWinner(nextBoard) && nextBoard.some((cell) => cell === null)) {
+      setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
+    }
+  };
+
+  const resetGame = () => {
+    setBoard(Array(9).fill(null));
+    setCurrentPlayer("X");
   };
 
   return (
     <Card className="overflow-hidden rounded-3xl border-primary/20 shadow-lift">
-      <CardContent className="grid min-h-[34rem] gap-6 p-5 sm:p-7 lg:grid-cols-[minmax(0,1.05fr)_minmax(18rem,0.95fr)]">
-        <div className="flex flex-col rounded-2xl bg-primary p-5 text-primary-foreground">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <p className="text-sm font-semibold">Aina's mental backpack</p>
-              <p className="mt-1 text-xs text-primary-foreground/65">
-                Drag or tap each label to release it.
+      <CardContent className="grid min-h-[32rem] place-items-center bg-secondary/40 p-5 sm:p-7">
+        <div className="w-full max-w-md text-center">
+
+          {/* Icon */}
+          <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-primary text-primary-foreground">
+            <Gamepad2 className="h-7 w-7" aria-hidden="true" />
+          </span>
+
+          {/* Title */}
+          <h2 className="mt-4 text-xl font-bold">
+            Tic-Tac-Toe
+          </h2>
+
+          <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
+            Take a quick, low-pressure break. No score, no streak and nothing
+            you need to achieve.
+          </p>
+
+          {/* Game status */}
+          <div className="mt-5 rounded-xl border border-border bg-card p-3">
+            {winner ? (
+              <p className="text-sm font-semibold">
+                {winner} wins 🎉
               </p>
-            </div>
-            <span className="rounded-full bg-primary-foreground/10 px-3 py-1 text-xs font-semibold">
-              {unloaded.length}/{unloadItems.length}
-            </span>
-          </div>
-
-          <div className="my-6 grid flex-1 place-items-center">
-            <div className="relative grid h-48 w-48 place-items-center rounded-[3rem] border-2 border-dashed border-primary-foreground/25 bg-primary-foreground/5 sm:h-56 sm:w-56">
-              <Backpack className="h-20 w-20 text-primary-foreground/35" aria-hidden="true" />
-              <div className="absolute inset-4 flex flex-wrap content-center justify-center gap-2">
-                {remaining.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    draggable
-                    onDragStart={(event) => event.dataTransfer.setData("text/plain", item.id)}
-                    onClick={() => release(item.id)}
-                    className="rounded-full bg-card px-3 py-1.5 text-xs font-semibold text-card-foreground shadow-soft transition-transform hover:-translate-y-0.5"
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <Progress
-            value={(unloaded.length / unloadItems.length) * 100}
-            className="bg-primary-foreground/15 [&>div]:bg-positive"
-          />
-        </div>
-
-        <div
-          className="flex min-h-72 flex-col rounded-2xl border-2 border-dashed border-positive/35 bg-positive-soft/45 p-5"
-          onDragOver={(event) => event.preventDefault()}
-          onDrop={(event) => {
-            event.preventDefault();
-            release(event.dataTransfer.getData("text/plain"));
-          }}
-        >
-          <div>
-            <p className="flex items-center gap-2 text-sm font-semibold text-positive">
-              <Leaf className="h-4 w-4" aria-hidden="true" /> Released for now
-            </p>
-            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-              Releasing a label does not delete the real task. It creates a short mental pause.
-            </p>
-          </div>
-
-          <div className="my-5 flex flex-1 flex-col justify-center gap-2">
-            {released.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-positive/30 p-7 text-center">
-                <p className="text-sm font-semibold">Drop a label here</p>
-                <p className="mt-1 text-xs text-muted-foreground">On mobile, tap any label.</p>
-              </div>
+            ) : isDraw ? (
+              <p className="text-sm font-semibold">
+                It&apos;s a draw — nice reset 🙂
+              </p>
             ) : (
-              released.map((item) => (
-                <div key={item.id} className="rounded-xl border border-positive/25 bg-card p-3">
-                  <p className="flex items-center gap-2 text-sm font-semibold">
-                    <Check className="h-4 w-4 text-positive" aria-hidden="true" /> {item.label}
-                  </p>
-                  <p className="mt-0.5 pl-6 text-xs text-muted-foreground">{item.detail}</p>
-                </div>
-              ))
+              <p className="text-sm text-muted-foreground">
+                Turn:{" "}
+                <span className="font-bold text-foreground">
+                  {currentPlayer}
+                </span>
+              </p>
             )}
           </div>
 
-          <div className="flex flex-wrap gap-2">
-            <Button className="rounded-xl" disabled={unloaded.length === 0} onClick={onComplete}>
-              {unloaded.length === unloadItems.length ? "I made some space" : "End reset here"}
+          {/* Board */}
+          <div className="mx-auto mt-5 grid max-w-xs grid-cols-3 gap-3">
+            {board.map((cell, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => handleCellClick(index)}
+                disabled={Boolean(cell) || Boolean(winner)}
+                className="aspect-square rounded-2xl border border-border bg-card text-3xl font-bold shadow-soft transition-all hover:-translate-y-0.5 hover:bg-secondary disabled:cursor-default disabled:hover:translate-y-0"
+                aria-label={`Tic tac toe cell ${index + 1}`}
+              >
+                {cell}
+              </button>
+            ))}
+          </div>
+
+          {/* Buttons */}
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            <Button
+              variant="outline"
+              className="rounded-xl"
+              onClick={resetGame}
+            >
+              <RefreshCcw className="h-4 w-4" aria-hidden="true" />
+              Play again
+            </Button>
+
+            <Button
+              className="rounded-xl"
+              onClick={onComplete}
+            >
+              Finish reset
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Button>
-            {unloaded.length > 0 ? (
-              <Button variant="ghost" className="rounded-xl" onClick={() => setUnloaded([])}>
-                <RefreshCcw className="h-4 w-4" aria-hidden="true" /> Reset game
-              </Button>
-            ) : null}
+          </div>
+
+          {/* Explanation */}
+          <div className="mt-5 rounded-xl border border-border bg-card p-4 text-left">
+            <p className="text-xs leading-relaxed text-muted-foreground">
+              This game is designed as a short mental pause, not another task
+              to complete. You can stop at any time and return to your week.
+            </p>
           </div>
         </div>
       </CardContent>
     </Card>
   );
 }
+
 
 function BreathingReset({ onComplete }: { onComplete: () => void }) {
   const [remaining, setRemaining] = useState(60);
@@ -601,7 +633,7 @@ function ListenReset({ onComplete }: { onComplete: () => void }) {
           </span>
           <h2 className="mt-5 text-xl font-bold">Aina's recovery shortcut</h2>
           <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Personal shortcuts are chosen by the user. LoadLess opens the activity and keeps the
+            Personal shortcuts are chosen by the user. Easey opens the activity and keeps the
             recovery block time-bounded instead of recommending an endless feed.
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
@@ -670,7 +702,7 @@ function ConnectReset({ onComplete }: { onComplete: () => void }) {
           </Button>
         </div>
         <p className="text-xs text-muted-foreground">
-          LoadLess does not message anyone automatically. The user decides whether to contact their
+          Easey does not message anyone automatically. The user decides whether to contact their
           trusted person.
         </p>
       </CardContent>

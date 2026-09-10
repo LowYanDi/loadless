@@ -12,6 +12,7 @@ import {
   Sparkles,
   UsersRound,
   WandSparkles,
+  Bot,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -28,7 +29,7 @@ const primaryNav = [
 ] as const;
 
 const secondaryNav = [
-  { to: "/ai-assist", label: "Ai Assist", short: "AI", icon: WandSparkles },
+  { to: "/ai-assist", label: "Ai Assist", short: "AI", icon: Bot },
   { to: "/reset", label: "Reset Mode", short: "Reset", icon: Leaf },
   { to: "/insights", label: "Insights", short: "Insights", icon: LineChart },
   { to: "/settings", label: "Settings", short: "Settings", icon: SettingsIcon },
@@ -110,7 +111,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               aria-label="Open AI Assist"
               className="grid h-8 w-8 place-items-center rounded-lg border border-border bg-card text-foreground"
             >
-              <WandSparkles className="h-4 w-4" aria-hidden="true" />
+              <Bot className="h-4 w-4" aria-hidden="true" />
             </Link>
             <span className="rounded-full bg-warning-soft px-3 py-1 text-xs font-semibold text-warning-foreground">
               {currentCapacity}% used

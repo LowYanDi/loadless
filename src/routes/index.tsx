@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
+  Bot,
   CalendarDays,
   ChevronDown,
   Clock,
@@ -154,13 +155,12 @@ function Dashboard() {
         >
           <span className="flex min-w-0 items-center gap-3">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary-foreground/10">
-              <WandSparkles className="h-5 w-5" aria-hidden="true" />
+              <Bot className="h-5 w-5" aria-hidden="true" />
             </span>
             <span className="min-w-0">
-              <span className="block text-sm font-semibold">Explore the Innovation Lab</span>
+              <span className="block text-sm font-semibold">AI Assist</span>
               <span className="block text-xs text-primary-foreground/70">
-                Domino forecast · recovery debt · team ripple · relationship patterns · Ask AI ·
-                challenge
+                Ask Easey about your workload and get suggestion
               </span>
             </span>
           </span>
