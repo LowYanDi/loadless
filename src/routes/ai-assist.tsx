@@ -59,14 +59,14 @@ import {
 import { labelFor, levelFor } from "@/data/loadless";
 import { useLoadLessDemo, type SandboxChoice } from "@/hooks/use-loadless-demo";
 
-export const Route = createFileRoute("/lab")({
+export const Route = createFileRoute("/ai-assist")({
   head: () => ({
     meta: [
-      { title: "Innovation Lab — LoadLess" },
+      { title: "AI Assist - Easey" },
       {
         name: "description",
         content:
-          "Explore six interactive LoadLess concepts: domino forecasting, recovery debt, team-aware delegation, relationship patterns, grounded AI and a capacity challenge.",
+          "Ask Easey AI about your current workload, commitments, recovery and next best actions.",
       },
     ],
   }),
@@ -83,75 +83,197 @@ const tabIcons = {
 } satisfies Record<InnovationFeatureId, typeof Zap>;
 
 function InnovationLab() {
-  const [activeFeature, setActiveFeature] = useState<InnovationFeatureId>("domino");
+  const { currentCapacity } = useLoadLessDemo();
+  const [question, setQuestion] = useState("");
 
   return (
     <div className="space-y-6">
       <PageHeader
-        eyebrow="Interactive concepts"
-        title="Innovation Lab"
-        description="Six connected experiments built on the same LoadLess capacity engine. Try each one with Aina's demo week."
+        eyebrow="Personal workload assistant"
+        title="AI Assist"
+        description="Ask Easey about your workload, understand your current situation, and explore practical actions before making your next commitment."
       />
 
-      <Card className="overflow-hidden rounded-2xl border-primary/20 shadow-lift">
-        <CardContent className="grid gap-4 bg-primary p-5 text-primary-foreground sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
-          <div>
-            <p className="flex items-center gap-2 text-sm font-semibold">
-              <Sparkles className="h-4 w-4" aria-hidden="true" /> One decision, six perspectives
-            </p>
-            <p className="mt-1 max-w-2xl text-sm leading-relaxed text-primary-foreground/75">
-              The lab extends the existing sponsorship-deck story. It does not use a live AI model
-              or teammate accounts yet; interactions use transparent demo data.
-            </p>
-          </div>
-          <span className="w-fit rounded-full bg-primary-foreground/10 px-3 py-1.5 text-xs font-semibold">
-            UI prototype · local data
-          </span>
-        </CardContent>
-      </Card>
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.45fr)_minmax(18rem,0.75fr)]">
+        {/* LEFT: MAIN AI ASSIST */}
+        <Card className="rounded-2xl border-border shadow-soft">
+          <CardHeader className="pb-3">
+            <div className="flex items-start gap-3">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-primary text-primary-foreground">
+                <Bot className="h-5 w-5" aria-hidden="true" />
+              </span>
 
-      <Tabs
-        value={activeFeature}
-        onValueChange={(value) => setActiveFeature(value as InnovationFeatureId)}
-        className="space-y-5"
-      >
-        <div className="overflow-x-auto pb-1">
-          <TabsList className="grid h-auto min-w-[46rem] grid-cols-6 gap-1 rounded-2xl p-1.5">
-            {innovationFeatures.map((feature) => {
-              const Icon = tabIcons[feature.id];
-              return (
-                <TabsTrigger
-                  key={feature.id}
-                  value={feature.id}
-                  className="gap-2 rounded-xl py-2.5"
-                >
-                  <Icon className="h-4 w-4" aria-hidden="true" />
-                  {feature.label}
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
+              <div>
+                <CardTitle className="text-lg">Hi! I’m Easey.</CardTitle>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  Ask me anything about your workload, commitments, capacity,
+                  or how to find a better balance.
+                </p>
+              </div>
+            </div>
+          </CardHeader>
+
+          <CardContent className="space-y-5">
+            {/* Suggested prompts */}
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Suggested questions
+              </p>
+
+              <div className="flex flex-wrap gap-2">
+                {[
+                  "Can I accept this request?",
+                  "What should I reduce this week?",
+                  "Why is Wednesday overloaded?",
+                  "How can I improve my recovery?",
+                ].map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    onClick={() => setQuestion(prompt)}
+                    className="rounded-full border border-border bg-secondary px-3 py-2 text-xs font-medium transition-colors hover:bg-secondary/70"
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Example AI answer */}
+            <div className="rounded-2xl border border-border bg-secondary/40 p-4">
+              <div className="flex gap-3">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground">
+                  <Sparkles className="h-4 w-4" aria-hidden="true" />
+                </span>
+
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold">Easey AI</p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Your current capacity is already relatively high. Before
+                    accepting another commitment, consider whether it affects
+                    your busiest day, removes recovery time, or pushes another
+                    important task later.
+                  </p>
+
+                  <div className="mt-3 rounded-xl border border-border bg-background p-3">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Recommended next step
+                    </p>
+                    <p className="mt-1 text-sm font-medium">
+                      Try the Commitment Sandbox first, then review the Action Plan
+                      if the projected load becomes too high.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Input */}
+            <div className="flex gap-2">
+              <Input
+                value={question}
+                onChange={(event) => setQuestion(event.target.value)}
+                placeholder="Ask Easey anything..."
+                className="h-11 rounded-xl"
+              />
+
+              <Button
+                type="button"
+                className="h-11 w-11 rounded-xl p-0"
+                aria-label="Send question"
+                onClick={() => {
+                  if (!question.trim()) return;
+                  toast.success("Easey is reviewing your workload context.");
+                }}
+              >
+                <Send className="h-4 w-4" aria-hidden="true" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* RIGHT: CURRENT CONTEXT */}
+        <div className="space-y-5">
+          <Card className="rounded-2xl border-border shadow-soft">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">Current Context</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Easey uses your current workload information when giving suggestions.
+              </p>
+            </CardHeader>
+
+            <CardContent className="space-y-3">
+              <ContextRow
+                label="Capacity"
+                value={`${currentCapacity}%`}
+              />
+              <ContextRow
+                label="Highest-load day"
+                value="Wednesday"
+              />
+              <ContextRow
+                label="Active commitments"
+                value="5"
+              />
+              <ContextRow
+                label="Hidden loads"
+                value="2"
+              />
+              <ContextRow
+                label="Recovery debt"
+                value="4.5 h"
+              />
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-2xl border-border shadow-soft">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-base">Suggested Actions</CardTitle>
+            </CardHeader>
+
+            <CardContent className="space-y-2">
+              <Link
+                to="/sandbox"
+                className="flex items-center justify-between rounded-xl border border-border px-3 py-3 text-sm font-medium transition-colors hover:bg-secondary"
+              >
+                Check a new commitment
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+              <Link
+                to="/action-plan"
+                className="flex items-center justify-between rounded-xl border border-border px-3 py-3 text-sm font-medium transition-colors hover:bg-secondary"
+              >
+                Review Action Plan
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+              <Link
+                to="/reset"
+                className="flex items-center justify-between rounded-xl border border-border px-3 py-3 text-sm font-medium transition-colors hover:bg-secondary"
+              >
+                Start a Reset
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </CardContent>
+          </Card>
         </div>
+      </div>
+    </div>
+  );
+}
 
-        <TabsContent value="domino" className="mt-0">
-          <DominoFeature />
-        </TabsContent>
-        <TabsContent value="recovery" className="mt-0">
-          <RecoveryFeature />
-        </TabsContent>
-        <TabsContent value="team" className="mt-0">
-          <TeamRippleFeature />
-        </TabsContent>
-        <TabsContent value="patterns" className="mt-0">
-          <RelationshipFeature />
-        </TabsContent>
-        <TabsContent value="assistant" className="mt-0">
-          <AssistantFeature />
-        </TabsContent>
-        <TabsContent value="challenge" className="mt-0">
-          <ChallengeFeature />
-        </TabsContent>
-      </Tabs>
+function ContextRow({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex items-center justify-between rounded-xl bg-secondary/50 px-3 py-2.5">
+      <span className="text-sm text-muted-foreground">{label}</span>
+      <span className="text-sm font-semibold">{value}</span>
     </div>
   );
 }

@@ -31,7 +31,7 @@ const primaryNav = [
 
 const secondaryNav = [
   { to: "/reset", label: "Reset Mode", short: "Reset", icon: Leaf },
-  { to: "/lab", label: "Innovation Lab", short: "Lab", icon: WandSparkles },
+  { to: "/ai-assist", label: "Ai Assist", short: "AI", icon: WandSparkles },
   { to: "/insights", label: "Insights", short: "Insights", icon: LineChart },
   { to: "/settings", label: "Settings", short: "Settings", icon: SettingsIcon },
 ] as const;

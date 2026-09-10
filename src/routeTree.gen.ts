@@ -12,12 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ActionPlanRouteImport } from './routes/action-plan'
 import { Route as AfterRouteImport } from './routes/after'
+import { Route as AiAssistRouteImport } from './routes/ai-assist'
 import { Route as BoundaryRouteImport } from './routes/boundary'
 import { Route as CheckInRouteImport } from './routes/check-in'
 import { Route as CircleRouteImport } from './routes/circle'
 import { Route as HiddenLoadRouteImport } from './routes/hidden-load'
 import { Route as InsightsRouteImport } from './routes/insights'
-import { Route as LabRouteImport } from './routes/lab'
 import { Route as ResetRouteImport } from './routes/reset'
 import { Route as SandboxRouteImport } from './routes/sandbox'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -36,6 +36,11 @@ const ActionPlanRoute = ActionPlanRouteImport.update({
 const AfterRoute = AfterRouteImport.update({
   id: '/after',
   path: '/after',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiAssistRoute = AiAssistRouteImport.update({
+  id: '/ai-assist',
+  path: '/ai-assist',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BoundaryRoute = BoundaryRouteImport.update({
@@ -63,11 +68,6 @@ const InsightsRoute = InsightsRouteImport.update({
   path: '/insights',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LabRoute = LabRouteImport.update({
-  id: '/lab',
-  path: '/lab',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ResetRoute = ResetRouteImport.update({
   id: '/reset',
   path: '/reset',
@@ -93,12 +93,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/action-plan': typeof ActionPlanRoute
   '/after': typeof AfterRoute
+  '/ai-assist': typeof AiAssistRoute
   '/boundary': typeof BoundaryRoute
   '/check-in': typeof CheckInRoute
   '/circle': typeof CircleRoute
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
-  '/lab': typeof LabRoute
   '/reset': typeof ResetRoute
   '/sandbox': typeof SandboxRoute
   '/settings': typeof SettingsRoute
@@ -108,12 +108,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/action-plan': typeof ActionPlanRoute
   '/after': typeof AfterRoute
+  '/ai-assist': typeof AiAssistRoute
   '/boundary': typeof BoundaryRoute
   '/check-in': typeof CheckInRoute
   '/circle': typeof CircleRoute
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
-  '/lab': typeof LabRoute
   '/reset': typeof ResetRoute
   '/sandbox': typeof SandboxRoute
   '/settings': typeof SettingsRoute
@@ -124,12 +124,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/action-plan': typeof ActionPlanRoute
   '/after': typeof AfterRoute
+  '/ai-assist': typeof AiAssistRoute
   '/boundary': typeof BoundaryRoute
   '/check-in': typeof CheckInRoute
   '/circle': typeof CircleRoute
   '/hidden-load': typeof HiddenLoadRoute
   '/insights': typeof InsightsRoute
-  '/lab': typeof LabRoute
   '/reset': typeof ResetRoute
   '/sandbox': typeof SandboxRoute
   '/settings': typeof SettingsRoute
@@ -141,12 +141,12 @@ export interface FileRouteTypes {
     | '/'
     | '/action-plan'
     | '/after'
+    | '/ai-assist'
     | '/boundary'
     | '/check-in'
     | '/circle'
     | '/hidden-load'
     | '/insights'
-    | '/lab'
     | '/reset'
     | '/sandbox'
     | '/settings'
@@ -156,12 +156,12 @@ export interface FileRouteTypes {
     | '/'
     | '/action-plan'
     | '/after'
+    | '/ai-assist'
     | '/boundary'
     | '/check-in'
     | '/circle'
     | '/hidden-load'
     | '/insights'
-    | '/lab'
     | '/reset'
     | '/sandbox'
     | '/settings'
@@ -171,12 +171,12 @@ export interface FileRouteTypes {
     | '/'
     | '/action-plan'
     | '/after'
+    | '/ai-assist'
     | '/boundary'
     | '/check-in'
     | '/circle'
     | '/hidden-load'
     | '/insights'
-    | '/lab'
     | '/reset'
     | '/sandbox'
     | '/settings'
@@ -187,12 +187,12 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ActionPlanRoute: typeof ActionPlanRoute
   AfterRoute: typeof AfterRoute
+  AiAssistRoute: typeof AiAssistRoute
   BoundaryRoute: typeof BoundaryRoute
   CheckInRoute: typeof CheckInRoute
   CircleRoute: typeof CircleRoute
   HiddenLoadRoute: typeof HiddenLoadRoute
   InsightsRoute: typeof InsightsRoute
-  LabRoute: typeof LabRoute
   ResetRoute: typeof ResetRoute
   SandboxRoute: typeof SandboxRoute
   SettingsRoute: typeof SettingsRoute
@@ -220,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/after'
       fullPath: '/after'
       preLoaderRoute: typeof AfterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-assist': {
+      id: '/ai-assist'
+      path: '/ai-assist'
+      fullPath: '/ai-assist'
+      preLoaderRoute: typeof AiAssistRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/boundary': {
@@ -257,13 +264,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InsightsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lab': {
-      id: '/lab'
-      path: '/lab'
-      fullPath: '/lab'
-      preLoaderRoute: typeof LabRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/reset': {
       id: '/reset'
       path: '/reset'
@@ -299,12 +299,12 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ActionPlanRoute: ActionPlanRoute,
   AfterRoute: AfterRoute,
+  AiAssistRoute: AiAssistRoute,
   BoundaryRoute: BoundaryRoute,
   CheckInRoute: CheckInRoute,
   CircleRoute: CircleRoute,
   HiddenLoadRoute: HiddenLoadRoute,
   InsightsRoute: InsightsRoute,
-  LabRoute: LabRoute,
   ResetRoute: ResetRoute,
   SandboxRoute: SandboxRoute,
   SettingsRoute: SettingsRoute,
