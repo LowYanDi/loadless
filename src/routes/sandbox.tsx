@@ -46,7 +46,7 @@ import {
 export const Route = createFileRoute("/sandbox")({
   head: () => ({
     meta: [
-      { title: "Commitment Sandbox — LoadLess" },
+      { title: "Commitment Sandbox — Easey" },
       {
         name: "description",
         content:
@@ -128,6 +128,85 @@ function Sandbox() {
   const affectedDayCurrent = weeklyLoad.find((day) => day.full === affectedDay)?.load ?? 94;
   const affectedDayForecast =
     comparisonData.find((day) => day.full === affectedDay)?.forecast ?? affectedDayCurrent;
+
+  const dominoSteps =
+  choice === "accept"
+    ? [
+        {
+          title: `${affectedDay} becomes overloaded`,
+          detail: `${affectedDay} increases from ${affectedDayCurrent}% to ${affectedDayForecast}% after accepting the full commitment.`,
+          status: `${affectedDayForecast}% load`,
+        },
+        {
+          title: "Existing work gets squeezed",
+          detail:
+            "The new high-focus commitment competes with assignments and other existing responsibilities.",
+          status: "Higher pressure",
+        },
+        {
+          title: "Recovery space may shrink",
+          detail:
+            "Flexible recovery time may be the first thing sacrificed when the week becomes too full.",
+          status: "Recovery at risk",
+        },
+        {
+          title: "The pressure carries forward",
+          detail:
+            "Tasks that no longer fit may move into the following days, leaving less buffer for unexpected work.",
+          status: "Less buffer",
+        },
+      ]
+    : choice === "reduce"
+      ? [
+          {
+            title: `${affectedDay} stays closer to capacity`,
+            detail: `Reducing the scope limits the increase on ${affectedDay} to ${affectedDayForecast}%.`,
+            status: `${affectedDayForecast}% load`,
+          },
+          {
+            title: "The commitment becomes smaller",
+            detail:
+              "Only the most important part of the request is kept instead of accepting the entire workload.",
+            status: "Reduced scope",
+          },
+          {
+            title: "Some work can be shared",
+            detail:
+              "A flexible part of the work can be delegated or moved instead of being carried by one person.",
+            status: "Shared load",
+          },
+          {
+            title: "Recovery space is better protected",
+            detail:
+              "Reducing the commitment leaves more room for existing work and recovery.",
+            status: "More buffer",
+          },
+        ]
+      : [
+          {
+            title: `${affectedDay} stays unchanged`,
+            detail: `Declining the request keeps ${affectedDay} at ${affectedDayCurrent}%.`,
+            status: `${affectedDayCurrent}% load`,
+          },
+          {
+            title: "Existing tasks stay in place",
+            detail:
+              "Assignments and planned commitments do not need to be pushed into another day.",
+            status: "Protected",
+          },
+          {
+            title: "Recovery remains available",
+            detail:
+              "No additional workload is added, so existing recovery time can remain protected.",
+            status: "Protected",
+          },
+          {
+            title: "The week keeps its buffer",
+            detail:
+              "Available capacity remains for unexpected academic, social or personal responsibilities.",
+            status: "Buffer kept",
+          },
+        ];
 
   return (
     <div className="space-y-6">
@@ -369,6 +448,67 @@ function Sandbox() {
       </Card>
 
       <Card className="rounded-2xl border-border shadow-soft">
+        <CardHeader className="sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Zap className="h-4 w-4 text-warning" aria-hidden="true" />
+              Domino Effect
+            </CardTitle>
+
+            <p className="mt-1 text-sm text-muted-foreground">
+              See how this decision may affect the rest of your week — not just the final percentage.
+            </p>
+          </div>
+
+          <StatusPill
+            level={selectedOption.level}
+            label={
+              choice === "accept"
+                ? "Higher ripple"
+                : choice === "reduce"
+                  ? "Contained impact"
+                  : "No added impact"
+            }
+          />
+        </CardHeader>
+
+        <CardContent>
+          <div className="grid gap-3 md:grid-cols-4">
+            {dominoSteps.map((step, index) => (
+              <div key={step.title} className="relative">
+                <div className="h-full rounded-xl border border-border bg-background p-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-muted-foreground">
+                      0{index + 1}
+                    </span>
+
+                    <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-semibold">
+                      {step.status}
+                    </span>
+                  </div>
+
+                  <p className="mt-3 text-sm font-semibold">
+                    {step.title}
+                  </p>
+
+                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                    {step.detail}
+                  </p>
+                </div>
+
+                {index < dominoSteps.length - 1 ? (
+                  <ArrowRight
+                    className="absolute -right-3 top-1/2 z-10 hidden h-5 w-5 -translate-y-1/2 rounded-full bg-card p-0.5 text-muted-foreground md:block"
+                    aria-hidden="true"
+                  />
+                ) : null}
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="rounded-2xl border-border shadow-soft">
         <CardHeader>
           <CardTitle className="text-base">How do you want to answer?</CardTitle>
         </CardHeader>
@@ -409,10 +549,10 @@ function Sandbox() {
           <Button
             variant="outline"
             className="w-full rounded-xl"
-            onClick={() => navigate({ to: "/lab" })}
+            onClick={() => navigate({ to: "/ai-assist" })}
           >
-            Preview the four-day domino effect
-            <Zap className="h-4 w-4" aria-hidden="true" />
+            Ask Easey AI about this decision
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
           </Button>
         </CardContent>
       </Card>
