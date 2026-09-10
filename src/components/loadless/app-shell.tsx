@@ -24,14 +24,12 @@ const primaryNav = [
   { to: "/tasks", label: "Commitments", short: "Tasks", icon: ListTodo },
   { to: "/circle", label: "Capacity Circle", short: "Circle", icon: UsersRound },
   { to: "/check-in", label: "60-sec Check-in", short: "Check-in", icon: HeartPulse },
-  { to: "/hidden-load", label: "Hidden Load", short: "Inbox", icon: Inbox },
-  { to: "/sandbox", label: "Sandbox", short: "Sandbox", icon: FlaskConical },
-  { to: "/action-plan", label: "Action Plan", short: "Plan", icon: ListChecks },
+  { to: "/hidden-load", label: "Smart Decision", short: "Decision", icon: Sparkles },
 ] as const;
 
 const secondaryNav = [
-  { to: "/reset", label: "Reset Mode", short: "Reset", icon: Leaf },
   { to: "/ai-assist", label: "Ai Assist", short: "AI", icon: WandSparkles },
+  { to: "/reset", label: "Reset Mode", short: "Reset", icon: Leaf },
   { to: "/insights", label: "Insights", short: "Insights", icon: LineChart },
   { to: "/settings", label: "Settings", short: "Settings", icon: SettingsIcon },
 ] as const;
@@ -108,8 +106,8 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Leaf className="h-4 w-4" aria-hidden="true" />
             </Link>
             <Link
-              to="/lab"
-              aria-label="Open Innovation Lab"
+              to="/ai-assist"
+              aria-label="Open AI Assist"
               className="grid h-8 w-8 place-items-center rounded-lg border border-border bg-card text-foreground"
             >
               <WandSparkles className="h-4 w-4" aria-hidden="true" />

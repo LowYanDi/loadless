@@ -30,7 +30,7 @@ import { useLoadLessDemo, type DeadlineOption, type EffortLevel } from "@/hooks/
 export const Route = createFileRoute("/hidden-load")({
   head: () => ({
     meta: [
-      { title: "Hidden Load Inbox — LoadLess" },
+      { title: "Hidden Load Inbox — Easey" },
       {
         name: "description",
         content:

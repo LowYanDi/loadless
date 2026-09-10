@@ -12,7 +12,7 @@ import { useLoadLessDemo, type BoundaryTone } from "@/hooks/use-loadless-demo";
 export const Route = createFileRoute("/boundary")({
   head: () => ({
     meta: [
-      { title: "Boundary Assistant — LoadLess" },
+      { title: "Boundary Assistant — Easey" },
       {
         name: "description",
         content:
@@ -148,7 +148,7 @@ function Boundary() {
           <Button
             variant="outline"
             className="rounded-xl bg-card"
-            onClick={() => navigate({ to: "/lab" })}
+            onClick={() => navigate({ to: "/insights" })}
           >
             Review pattern
             <ArrowRight className="h-4 w-4" aria-hidden="true" />

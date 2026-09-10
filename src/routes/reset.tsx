@@ -34,7 +34,7 @@ import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
 export const Route = createFileRoute("/reset")({
   head: () => ({
     meta: [
-      { title: "Reset Mode — LoadLess" },
+      { title: "Reset Mode — Easey" },
       {
         name: "description",
         content:

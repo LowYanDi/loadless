@@ -43,7 +43,7 @@ import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Capacity Dashboard — LoadLess" },
+      { title: "Capacity Dashboard — Easey" },
       {
         name: "description",
         content:
@@ -149,7 +149,7 @@ function Dashboard() {
         </Link>
 
         <Link
-          to="/lab"
+          to="/ai-assist"
           className="group flex items-center justify-between gap-4 rounded-2xl border border-primary/20 bg-primary p-4 text-primary-foreground shadow-lift transition-all hover:-translate-y-0.5"
         >
           <span className="flex min-w-0 items-center gap-3">

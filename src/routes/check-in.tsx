@@ -15,7 +15,7 @@ import { calculateCheckInAdjustment, useLoadLessDemo } from "@/hooks/use-loadles
 export const Route = createFileRoute("/check-in")({
   head: () => ({
     meta: [
-      { title: "60-second Check-in — LoadLess" },
+      { title: "60-second Check-in — Easey" },
       {
         name: "description",
         content:

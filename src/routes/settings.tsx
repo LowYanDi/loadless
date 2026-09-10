@@ -14,7 +14,7 @@ import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
 export const Route = createFileRoute("/settings")({
   head: () => ({
     meta: [
-      { title: "Settings — LoadLess" },
+      { title: "Settings — Easey" },
       {
         name: "description",
         content: "Adjust capacity assumptions, reminders, appearance and local demo data.",

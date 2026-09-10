@@ -48,7 +48,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/circle")({
   head: () => ({
     meta: [
-      { title: "Capacity Circle — LoadLess" },
+      { title: "Capacity Circle — Easey" },
       {
         name: "description",
         content:

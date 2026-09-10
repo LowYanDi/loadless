@@ -42,7 +42,7 @@ import { useLoadLessDemo } from "@/hooks/use-loadless-demo";
 export const Route = createFileRoute("/tasks")({
   head: () => ({
     meta: [
-      { title: "Tasks — LoadLess" },
+      { title: "Tasks — Easey" },
       {
         name: "description",
         content: "Add, edit, complete and remove commitments that contribute to weekly capacity.",
