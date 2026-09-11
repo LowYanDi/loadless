@@ -61,6 +61,8 @@ Easey supports human decisions; it does not diagnose stress, anxiety, depression
 
 ### 1.4 Feature Set
 
+This table describes Easey’s intended feature set, including demonstrated and planned capabilities. Section 3.3 distinguishes current prototype functionality from planned implementation.
+
 | Layer         | Feature                        | What it contributes                                                                                                                                                                                                                                               |
 | ------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Foundation    | Workload Dashboard             | Combines time, mental, physical, social, and errand load into a readable weekly view and highlights overloaded periods and their main drivers.                                                                                                                    |
@@ -80,7 +82,7 @@ Easey supports human decisions; it does not diagnose stress, anxiety, depression
 
 ### 1.5 Intended User Impact
 
-Without Easey, Aina sees a simple three-hour request and may accept it immediately. With Easey, she sees that it would raise her weekly capacity from **82% to 113%** and push Wednesday from **94% to 128%**. She can then rescope the deliverable, move flexible errands, delegate research with consent, send a specific boundary message, and reach a more workable **84%** forecast.
+In the illustrative Aina demo scenario, accepting the request raises the workload indicator from 82% to 113%. Selecting the demonstrated adjustments produces a projected value of 84%. These figures illustrate the decision process rather than measured stress reduction. Changes involving another person remain proposals until agreement is confirmed.
 
 The intended change is not merely a lower number. The student makes an earlier, more informed, and more communicable decision.
 
@@ -154,7 +156,7 @@ The final flow starts with ordinary commitments and a short check-in, then moves
 
 **Public UI prototype:** [https://loadless-ashy.vercel.app/](https://loadless-ashy.vercel.app/)
 
-The public link is the frozen finalist build. It demonstrates the complete Aina scenario with reliable local data and has been checked against this README. The interface is responsive and uses warm colours, status labels, icons, and facial expressions so that capacity is not communicated through colour alone.
+The public link presents Easey’s current submission prototype. It demonstrates the Aina decision journey using local demo data and rule-based interactions. Some screens illustrate intended product behaviour; live AI and shared multi-user services are not yet connected.
 
 ### 3.1 Eleven Key Screens
 
@@ -204,7 +206,7 @@ The student edits a polite decline, delegation request, or reduced-scope proposa
 
 ![Easey Recovery and Follow-up](docs/report-images/12-recovery-follow-up.png)
 
-The Decision Receipt records the 113% to 84% outcome, selected actions, ownership, moved work, boundary, and protected recovery. The student can then report whether more recovery is needed.
+The Decision Receipt summarises the selected proposal and its projected workload impact, illustrated by a change from 113% to 84% in the demo scenario. It brings together proposed adjustments, communication and recovery next steps. This local demonstration does not verify recipient agreement or complete a real transfer of responsibility.
 
 #### 9. Capacity Circle
 
@@ -216,13 +218,13 @@ The invite-only Circle previews privacy-aware group capacity and helps a student
 
 ![Easey AI Assist](docs/report-images/14-ai-assist.png)
 
-Students describe a workload concern and explore suggestions grounded in current commitments and preferences. AI Assist guides them towards simulation, rebalancing, boundary communication, or recovery, while proposed changes remain subject to confirmation.
+AI Assist demonstrates a conversational entry point for workload concerns, using controlled prototype responses to guide students towards relevant features. Live AI grounded in each student’s saved commitments and preferences is planned for the building phase.
 
 #### 11. Reset Mode
 
 ![Easey Reset Mode](docs/report-images/15-reset-mode.png)
 
-Students explore recovery and focus activities based on preferences collected during onboarding, current workload, available time, and environment. They can choose a different activity, protect recovery through Recovery Shield, and optionally provide feedback afterwards.
+The prototype offers selectable recovery and focus activities, including games, breathing, stretching, walking, music, rest and connection. Focus Cycle demonstrates a rule-based recommendation based on the displayed capacity indicator. Personalisation using onboarding preferences, feedback-based suggestions and integrated Recovery Shield scheduling are planned enhancements.
 
 **Prototype status:** this is an interactive UI using controlled local demo data. Live AI extraction, real accounts, invitations, notifications, and cross-user synchronisation are not yet connected.
 
@@ -402,6 +404,7 @@ The Dify API key is stored as a Supabase Edge Function secret, while the OpenAI 
 ### 5.4 Transparent Capacity Model
 
 The prototype uses a visible heuristic rather than pretending to provide a clinically validated prediction.
+The displayed percentage is an illustrative workload indicator, not a direct percentage of available hours. The prototype uses a preset baseline, rule-based adjustments and illustrative action savings to demonstrate possible trade-offs.
 
 ```text
 incoming impact = time cost + focus cost + urgency cost + context-switch cost
@@ -548,7 +551,7 @@ We will test with university students using the same incoming-request scenario b
 
 ### Requirements
 
-- Node.js 20 or later
+- Node.js 22.12 or later
 - npm
 - Git
 
