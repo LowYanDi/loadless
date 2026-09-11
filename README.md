@@ -260,16 +260,17 @@ Easey's novelty is the **decision sequence**, not a claim that every individual 
 ### 4.1 Four Signature Innovations
 
 1. **Pre-commitment simulation**  
-   The Hidden Load Inbox turns an informal request into editable fields and links each extracted detail to source evidence. The Commitment Sandbox then lets the student test a full yes, smaller yes, deadline change, or decline before changing the real week.
+   The Hidden Load Inbox turns an informal request into editable fields and links explicitly stated details to source evidence. Suggested hidden costs remain distinguishable for student review. The Commitment Sandbox lets students compare a full yes, smaller yes, deadline change or decline before changing their actual plan.
 
-2. **Explainable decisions rather than a mystery score**  
-   Easey separates time, focus, urgency, and context-switch costs, then shows how every selected action changes the forecast. The Action Plan, Boundary Assistant, and Decision Receipt connect insight to a specific negotiation and an auditable outcome.
+2. **From Personal Limits to a Negotiable “Smaller Yes”**  
+   Easey connects personal limits to a specific counterproposal, a workload preview and an editable boundary message. For example, Aina could offer an outline and five slides instead of accepting an entire sponsorship deck, while requesting help with the remaining work.
+**The twist:** a possible plan remains distinct from an agreed plan. A lower projected workload does not mean responsibility has changed. Adjustments requiring another person’s agreement remain pending; if rejected, the student can revisit alternatives.
 
 3. **Privacy-aware Capacity Circle**  
-   The twist is not simply sharing a workload percentage. Members control what others may see; Smart Match considers willingness, skills, available time, and projected receiving capacity; and responsibility moves only after both people agree on the scope and the recipient explicitly accepts it.
+   Members choose which capacity signals to share. Smart Match considers willingness, relevant skills, available time and projected workload before recommending help. Easey previews the impact on both people, helping students assess whether the arrangement would overload the recipient. Responsibility transfers only after the scope is agreed and the receiving member explicitly accepts.
 
 4. **Capacity-adaptive recovery and focus**  
-   Recovery is part of the workload decision rather than a separate wellness tab. Recovery Shield protects rest, while Focus Cycle recommends a gentler or deeper rhythm according to the current capacity indicator and always permits user override.
+   Easey connects recovery with workload decisions and students’ relaxation preferences. Recovery Shield flags conflicts with protected rest and offers alternatives. Focus Cycle suggests a work-and-break rhythm based on the workload indicator, while students can override it or choose a recovery activity instead.
 
 ### 4.2 Supporting Innovation
 
@@ -433,7 +434,7 @@ Changing duration, effort, or deadline pressure updates the forecast immediately
 
 ### 5.6 Three-Week Build Plan
 
-The public UI is already complete, so the build phase focuses on one functional vertical slice. **P0 is the release gate, P1 follows the working core, and P2 is limited to one collaboration slice that ships only after privacy and concurrency tests pass.** This prevents feature expansion from weakening the core journey.
+The build phase focuses on one functional MVP. P0, P1 and P2 describe implementation order: the persistent individual journey comes first, followed by bounded AI integration and one consent-based Circle flow. The minimum release requires all three slices, with privacy and acceptance checks completed before real shared data is enabled.
 
 #### Already completed in the interactive prototype
 
@@ -494,6 +495,35 @@ These features currently use controlled demo data.
 | **Week 3 - P2 collaboration slice + hardening** | Implement one real Circle invitation, help request, accept/decline flow, agreement record, and transactional double-acceptance protection; add editable boundary drafting, rate limits, errors, accessibility, and deployment tests. | An opted-in member sees only approved signals and can respond to one scoped request; secrets stay server-side; core tests pass on desktop and mobile.   |
 
 Full Realtime Workboard synchronisation, advanced AI Assist conversation memory, external integrations, and additional multiplayer activities remain outside this three-week commitment.
+
+#### Team Responsibilities and Resource Plan
+
+| Workstream | Owner | Main Deliverable |
+| --- | --- | --- |
+| Frontend and decision journey | Low Yan Di | Connect the persistent Capture-to-Response flow and clearly distinguish projected, pending and agreed changes. |
+| Backend and access control | Lim Zhun Zi | Implement Supabase Auth, PostgreSQL storage, Row Level Security and cross-session persistence. |
+| AI integration | Tee Jun Hao | Connect the Supabase Edge Function, Dify and OpenAI API for editable extraction and response drafting, with validation and manual-entry fallback. |
+| Capacity Circle and integration testing | Ng Yee Qing | Implement one consent-based help request and verify acceptance, privacy and the complete user journey. |
+
+Each member will contribute approximately **30 hours per week** during the three-week build. Owners coordinate each workstream, while the team shares code review, integration and testing responsibilities.
+
+We will prioritise free service tiers where their limits and terms support the MVP, and review any paid upgrade against the remaining budget before activation.
+
+The team will allocate a total service budget of **RM 200** for the building phase, covering AI usage and any required cloud-service costs. Before implementation, we will check service limits and pricing, configure available usage controls, and monitor spending against this budget.
+
+#### Minimum Delivery Scope and Contingency
+
+The minimum functional MVP will include:
+
+- Supabase authentication and persistent personal commitments, check-ins and decisions.
+- One complete Capture → Simulate → Rebalance → Respond → Recover journey.
+- One bounded AI workflow supporting editable commitment extraction and boundary-message drafting.
+- One consent-based Capacity Circle invitation and help request, with recorded acceptance or decline.
+- Clear separation between projected changes and agreed responsibilities.
+
+The individual journey will be implemented first, followed by AI integration and the limited Circle flow. Privacy and acceptance checks are required before enabling real shared data.
+
+If implementation takes longer than expected, we will defer advanced Smart Match, full Workboard synchronisation, AI Assist conversation memory and additional personalisation before reducing the minimum delivery scope. Manual entry and editable response templates will remain available when AI services fail.
 
 ### 5.7 MVP Acceptance Criteria
 
