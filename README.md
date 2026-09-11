@@ -1,16 +1,21 @@
+<p align="center">
+  <img src="docs/report-images/01-codenection-logo.png" alt="CodeNection logo" width="108" />
+</p>
+
 # Easey by Team Win Win
 
 > **Know your capacity before you say yes.**
 
 Easey is a capacity decision assistant for university students. It reveals the hidden cost of an incoming commitment, lets the student test the consequences before accepting it, and turns overload into a realistic plan, an editable boundary message, and protected recovery.
 
-| Submission item              | Link                                              |
-| ---------------------------- | ------------------------------------------------- |
-| **Team**                     | Low Yan Di, Lim Zhun Zi, Tee Jun Hao, Ng Yee Qing |
-| **Problem Statement**        | Stress & Workload Manager                         |
-| **Interactive UI Prototype** | [Open Easey](https://loadless-ashy.vercel.app/)   |
-| **Video Presentation**       | **Add unlisted YouTube link before submission**   |
-| **Presentation Slides**      | **Add public slides link before submission**      |
+| Submission item              | Link                                                                                      |
+| ---------------------------- | ----------------------------------------------------------------------------------------- |
+| **Team**                     | Low Yan Di (2508342), Lim Zhun Zi (2508335), Tee Jun Hao (2508375), Ng Yee Qing (2508347) |
+| **Contact Lead**             | Low Yan Di · 011-10893351                                                                 |
+| **Problem Statement**        | Stress & Workload Manager                                                                 |
+| **Interactive UI Prototype** | [Open Easey](https://loadless-ashy.vercel.app/)                                           |
+| **Video Presentation**       | **Add unlisted YouTube link before submission**                                           |
+| **Presentation Slides**      | **Add public slides link before submission**                                              |
 
 The prototype link has been tested as a public deployment. The current build is an interactive UI prototype using controlled local data and deterministic rules; it does not yet use real accounts, live cross-user data, automatic message access, or a live AI model.
 
@@ -28,7 +33,7 @@ The failure happens at the decision moment: students frequently say yes before s
 
 **Primary stakeholders**
 
-- University students aged approximately 18-25 who manage commitments from several sources.
+- University students aged approximately 18-25 who manage at least two additional commitment sources alongside their studies.
 - Students balancing academic work with clubs, jobs, care responsibilities, commuting, or health needs.
 
 **Secondary stakeholders**
@@ -56,22 +61,22 @@ Easey supports human decisions; it does not diagnose stress, anxiety, depression
 
 ### 1.4 Feature Set
 
-| Layer         | Feature                        | What it contributes                                                                                                                                                                                                |
-| ------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Foundation    | Workload Dashboard             | Combines time, mental, physical, social, and errand load into a readable weekly view and highlights overloaded periods and their main drivers.                                                                     |
-| Foundation    | Commitment Management          | Adds, edits, completes, and removes commitments with duration, effort, deadline, recurrence, category, flexibility, and dependencies.                                                                              |
-| Foundation    | 60-second Check-in             | Lets the student update energy, sleep, stress, and physical fatigue without maintaining a long diary.                                                                                                              |
-| Core decision | Hidden Load + Hidden Cost      | Turns a pasted request into editable commitment fields, links them to an Evidence Map, and reveals preparation, travel, coordination, and follow-up work for confirmation.                                         |
-| Core decision | Commitment Sandbox             | Simulates the cost of a new request and compares accepting it as requested, offering a smaller yes, moving the deadline, or declining.                                                                             |
-| Core decision | Domino Effect                  | Shows where overload squeezes existing work, recovery, and the following days rather than reporting only one final percentage.                                                                                     |
-| Core decision | Explainable Rebalancing        | Recommends reducing, moving, or delegating work, explains each trade-off, and shows the capacity effect step by step.                                                                                              |
-| Core decision | My Limits -> Smaller Yes       | Uses the student's available time, acceptable responsibilities, and protected commitments to define a realistic counterproposal.                                                                                   |
-| Communication | Boundary + Agreement Follow-up | Drafts an editable boundary message and distinguishes a proposed change from an agreed change. The original responsibility remains until the other person accepts.                                                 |
-| Outcome       | Decision Receipt               | Records the before/after capacity, ownership, moved work, boundary, agreement state, and protected recovery.                                                                                                       |
-| Collaboration | Capacity Circle + Smart Match  | Matches help using opt-in availability, skills, time, and projected capacity; previews the impact on both people and transfers responsibility only after explicit acceptance.                                      |
-| Collaboration | Assignment Workboard           | Tracks assignment parts, submissions, comments, and factual contribution evidence without ranking members.                                                                                                         |
-| Recovery      | Reset Mode + Recovery Shield   | Flags conflicts with protected recovery and offers a capacity-adaptive Focus Cycle, Tic-Tac-Toe, Tap & Tear, personalised music, breathing, stretching, walking, rest, and connection based on opt-in preferences. |
-| Guidance      | AI Assist prototype            | Demonstrates how contextual guidance could lead users into hidden-load analysis, simulation, action, communication, or recovery. Current responses remain controlled prototype content.                            |
+| Layer         | Feature                        | What it contributes                                                                                                                                                                                                                                               |
+| ------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Foundation    | Workload Dashboard             | Combines time, mental, physical, social, and errand load into a readable weekly view and highlights overloaded periods and their main drivers.                                                                                                                    |
+| Foundation    | Commitment Management          | Adds, edits, completes, and removes commitments with duration, effort, deadline, recurrence, category, flexibility, and dependencies.                                                                                                                             |
+| Foundation    | 60-second Check-in             | Lets the student update energy, sleep, stress, and physical fatigue without maintaining a long diary.                                                                                                                                                             |
+| Core decision | Hidden Load + Hidden Cost      | Turns a pasted request into editable commitment fields, links them to an Evidence Map, and reveals preparation, travel, coordination, and follow-up work for confirmation.                                                                                        |
+| Core decision | Commitment Sandbox             | Simulates the cost of a new request and compares accepting it as requested, offering a smaller yes, moving the deadline, or declining.                                                                                                                            |
+| Core decision | Domino Effect                  | Shows where overload squeezes existing work, recovery, and the following days rather than reporting only one final percentage.                                                                                                                                    |
+| Core decision | Explainable Rebalancing        | Recommends reducing, moving, or delegating work, explains each trade-off, supports partial improvements, and identifies unresolved conflicts when everything cannot fit.                                                                                          |
+| Core decision | My Limits -> Smaller Yes       | Uses the student's available time, acceptable responsibilities, and protected commitments to define a realistic counterproposal.                                                                                                                                  |
+| Communication | Boundary + Agreement Follow-up | Drafts an editable boundary message and distinguishes a proposed change from an agreed change. The original responsibility remains until the other person accepts.                                                                                                |
+| Outcome       | Decision Receipt               | Records the before/after capacity, ownership, moved work, boundary, agreement state, and protected recovery.                                                                                                                                                      |
+| Collaboration | Capacity Circle + Smart Match  | Matches help using opt-in availability, skills, time, and projected capacity; previews the impact on both people and transfers responsibility only after explicit acceptance.                                                                                     |
+| Collaboration | Assignment Workboard           | Tracks assignment parts, submissions, comments, and factual contribution evidence without ranking members.                                                                                                                                                        |
+| Recovery      | Reset Mode + Recovery Shield   | Flags conflicts with protected recovery and offers a capacity-adaptive Focus Cycle, Tic-Tac-Toe, Tap & Tear, personalised music, breathing, stretching, walking, rest, and connection based on opt-in preferences; optional feedback improves future suggestions. |
+| Guidance      | AI Assist prototype            | Clarifies missing information and demonstrates how contextual guidance could lead users into hidden-load analysis, simulation, action, communication, or recovery. Current responses remain controlled prototype content.                                         |
 
 ### 1.5 Intended User Impact
 
@@ -117,19 +122,19 @@ These are the boards the team used to move from causes and effects, through the 
 
 #### Board A - Problem Tree
 
-![Easey problem tree](docs/images/08-problem-tree.jpg)
+![Easey problem tree](docs/report-images/02-problem-tree.jpg)
 
 The problem tree connected scattered workload, hidden commitments, time-only judgement, social pressure, unequal group work, and postponed recovery to one central failure: students struggle to evaluate total workload before it becomes overwhelming. This moved us away from building another calendar.
 
 #### Board B - Ideation Mindmap
 
-![Easey ideation mindmap](docs/images/09-ideation-mindmap.jpg)
+![Easey ideation mindmap](docs/report-images/03-ideation-mindmap.jpg)
 
 The mindmap explored six directions: understand workload, capture hidden load, make better decisions, collaborate fairly, recover, and learn from patterns. We assessed the branches using relevance, novelty, demonstrability, safety, and three-week feasibility; the pre-commitment decision journey connected the strongest branches.
 
 #### Board C - Core User Flow
 
-![Easey core user flow](docs/images/10-core-user-flow.png)
+![Easey core user flow](docs/report-images/04-core-user-flow.png)
 
 The final flow starts with ordinary commitments and a short check-in, then moves through **Capture -> Forecast -> Compare -> Act -> Recover**. Capacity Circle is an optional help path, and any change involving another person stays pending until they accept it. This turns a broad feature set into one judge-visible outcome.
 
@@ -151,49 +156,75 @@ The final flow starts with ordinary commitments and a short check-in, then moves
 
 The public link is the frozen finalist build. It demonstrates the complete Aina scenario with reliable local data and has been checked against this README. The interface is responsive and uses warm colours, status labels, icons, and facial expressions so that capacity is not communicated through colour alone.
 
-### 3.1 Key Screens
+### 3.1 Eleven Key Screens
 
-#### 1. Capacity Dashboard
+#### 1. Commitments
 
-![Easey Capacity Dashboard](docs/images/01-dashboard.jpg)
+![Easey Commitments screen](docs/report-images/05-commitments.png)
 
-Aina can immediately see her 82% weekly capacity, highest-load day, remaining slack, category load, and the commitments contributing to the score.
+Students can add, edit, complete, or remove tasks with category, deadline, duration, and effort. This ordinary task-management foundation gives the capacity model confirmed workload data.
 
-#### 2. Hidden Load Inbox and Evidence Map
+#### 2. Quick Check-in
 
-![Easey Hidden Load Evidence Map](docs/images/02-hidden-load.jpg)
+![Easey Quick Check-in screen](docs/report-images/06-quick-check-in.png)
 
-After Aina pastes a message, the prototype links exact phrases to the extracted task, deadline, and duration. Nothing enters the plan until she reviews and confirms it.
+Students enter energy, sleep, and current stress in about 60 seconds. The check-in keeps suggestions responsive to changing capacity without requiring a long mood diary.
 
-#### 3. Commitment Sandbox
+#### 3. Capacity Dashboard
 
-![Easey Commitment Sandbox](docs/images/03-sandbox.jpg)
+![Easey Capacity Dashboard](docs/report-images/07-capacity-dashboard.png)
 
-The sandbox exposes the +31 point load anatomy and shows the forecast changing from 82% to 113%. Duration, effort, and deadline pressure are interactive.
+Aina can see her 82% weekly capacity, Wednesday as the highest-load day, category load, workload across the week, and the factors contributing to the score.
 
-#### 4. Explainable Action Plan
+#### 4. Hidden Load Inbox
 
-![Easey Explainable Action Plan](docs/images/04-action-plan.jpg)
+![Easey Hidden Load Inbox](docs/report-images/08-hidden-load-inbox.png)
 
-The Impact Ladder shows how rescoping, moving, and delegating work reduce the forecast step by step: 113% -> 101% -> 94% -> 84%.
+Aina pastes an informal request, reviews the Evidence Map, and confirms editable task details. Nothing enters the plan until she has checked it.
 
-#### 5. Capacity Circle
+#### 5. Commitment Sandbox
 
-![Easey Capacity Circle](docs/images/05-capacity-circle.jpg)
+![Easey Commitment Sandbox](docs/report-images/09-commitment-sandbox.png)
 
-The invite-only circle coordinates help using member-approved capacity signals. The Assignment Workboard records ownership, progress, submissions, comments, and factual contributions without ranking people.
+The Sandbox compares capacity before and after accepting, reducing, moving, or declining the request. In the demonstration, the incoming task adds 31 explainable points and changes the forecast from 82% to 113%.
 
-#### 6. Reset Mode
+#### 6. Action Engine
 
-![Easey Reset Mode](docs/images/06-reset-mode.jpg)
+![Easey Action Engine](docs/report-images/10-action-engine.png)
 
-Students can select a capacity-adaptive Focus Cycle or an optional short recovery activity. Music has no forced limit; other resets are intentionally short and non-competitive.
+The Action Engine presents three trade-offs with reasons and estimated capacity savings. Its Impact Ladder shows how rescoping, moving, and delegating work reduce 113% to 101%, then 94%, and finally 84%.
 
-#### 7. Outcome and Decision Receipt
+#### 7. Boundary Assistant
 
-![Easey Decision Outcome](docs/images/07-outcome.jpg)
+![Easey Boundary Assistant](docs/report-images/11-boundary-assistant.png)
 
-The final screen records what changed, why the plan became workable, who owns each part, what moved, which boundary was sent, and which recovery block was protected.
+The student edits a polite decline, delegation request, or reduced-scope proposal. Friendly, professional, and direct tones support communication while leaving the final wording and sending decision with the student.
+
+#### 8. Recovery and Follow-up
+
+![Easey Recovery and Follow-up](docs/report-images/12-recovery-follow-up.png)
+
+The Decision Receipt records the 113% to 84% outcome, selected actions, ownership, moved work, boundary, and protected recovery. The student can then report whether more recovery is needed.
+
+#### 9. Capacity Circle
+
+![Easey Capacity Circle](docs/report-images/13-capacity-circle.png)
+
+The invite-only Circle previews privacy-aware group capacity and helps a student request support from a member with room. The Assignment Workboard records parts, progress, submissions, leader comments, and factual contribution evidence without ranking members.
+
+#### 10. AI Assist
+
+![Easey AI Assist](docs/report-images/14-ai-assist.png)
+
+Students describe a workload concern and explore suggestions grounded in current commitments and preferences. AI Assist guides them towards simulation, rebalancing, boundary communication, or recovery, while proposed changes remain subject to confirmation.
+
+#### 11. Reset Mode
+
+![Easey Reset Mode](docs/report-images/15-reset-mode.png)
+
+Students explore recovery and focus activities based on preferences collected during onboarding, current workload, available time, and environment. They can choose a different activity, protect recovery through Recovery Shield, and optionally provide feedback afterwards.
+
+**Prototype status:** this is an interactive UI using controlled local demo data. Live AI extraction, real accounts, invitations, notifications, and cross-user synchronisation are not yet connected.
 
 ### 3.2 Design Decisions
 
@@ -248,15 +279,16 @@ Easey's novelty is the **decision sequence**, not a claim that every individual 
 
 ### 4.3 Differentiation Summary
 
-| Dimension         | Typical planning or wellbeing approach       | Easey's design emphasis                                       |
-| ----------------- | -------------------------------------------- | ------------------------------------------------------------- |
-| Decision timing   | Organise or reflect after work is recorded   | Intervene before the student accepts the request              |
-| Informal requests | User manually creates a normal task          | Reveal hidden fields and show an Evidence Map                 |
-| Overload response | Warn, list, or automatically reschedule      | Compare full yes, smaller yes, and decline                    |
-| Explainability    | Present a schedule, score, or recommendation | Show time, focus, urgency, context switch, and action savings |
-| Communication     | Leave negotiation outside the tool           | Convert the selected limit into an editable boundary message  |
-| Team coordination | Share project details or assign work         | Share only consented capacity signals and wait for acceptance |
-| Recovery          | Separate wellness activity                   | Protect recovery as part of the workload decision outcome     |
+| Need                        | Planning tools (Motion / Sunsama / Structured)                                           | Wellbeing tools (Daylio / Finch)                        | Easey                                                                                |
+| --------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Before the user says yes    | Usually not the main workflow                                                            | Usually not the main workflow                           | Core workflow: capture and simulate first                                            |
+| Transparent cost breakdown  | Time and scheduling are central; social pressure and context cost may remain implicit    | Mood or self-care is central                            | Time, effort, urgency, and context switching are shown separately                    |
+| Consent-based team help     | Collaboration may exist, but capacity consent is not normally the central decision layer | Generally individual                                    | Invite-only Circle, visibility controls, impact preview, Smart Match, and acceptance |
+| Assignment evidence         | Task status is common                                                                    | Not the main purpose                                    | Workboard, submissions, leader comments, and factual contribution record             |
+| Boundary communication      | Not usually tied to a simulated capacity trade-off                                       | Not usually tied to workload ownership                  | Editable response generated from the selected plan and tracked until agreement       |
+| Recovery linked to workload | Usually separate from scheduling                                                         | Wellbeing is central but not tied to a request forecast | Decision Receipt, Recovery Shield, reset options, and adaptive Focus Cycle           |
+
+_Desk-research references: Motion, Sunsama, Structured, Daylio, and Finch official product pages. Claims are limited to the high-level functions reviewed during ideation._
 
 ### 4.4 Future Engagement Concept - Stress Sprite Workshop
 
@@ -312,11 +344,56 @@ The deterministic capacity engine remains separate from AI. AI may extract, clar
 | Collaboration    | Circles, members, sharing preferences, help requests, assignment parts, submissions, comments, and agreements | Only explicitly shared fields are visible; recipient acceptance is recorded transactionally          |
 | AI request trail | Request status, validated structured result, and confirmation state                                           | Raw message retention is minimised; only student-confirmed information enters the operational record |
 
+#### Capacity Circle privacy
+
+Private commitments and personal check-in responses remain accessible only to their owner. Circle members can see only signals that the student explicitly chooses to share, such as:
+
+- a capacity band or percentage;
+- available hours;
+- broad workload categories;
+- relevant skills; and
+- willingness to receive help requests.
+
+Task titles remain private unless the student deliberately includes them in a specific help request. Row Level Security must be tested carefully against owner, member, non-member, and removed-member cases. Realtime limits and simultaneous help requests are expected constraints, so acceptance uses a transactional state rather than a client-side flag.
+
+#### Controlled AI workflow
+
+AI supports Hidden Load extraction, Hidden Cost Breakdown, clarification of incomplete requests, AI Assist conversations, accessible explanations, and editable boundary-message drafting. It does not independently calculate capacity, accept work, transfer responsibility, change the plan, or send a message.
+
+For each request, the Supabase Edge Function will:
+
+1. verify the student's Supabase authentication token;
+2. validate the submitted input;
+3. remove unnecessary fields;
+4. apply request and rate limits;
+5. call the appropriate Dify workflow using a server-side credential; and
+6. validate and return the structured result to the frontend.
+
+Dify manages system prompts, required inputs, model settings, workflow branches, structured response requirements, AI Assist conversation context, and prompt testing. Separate workflows can be used for Hidden Load extraction and conversational AI Assist so their purposes and output formats remain clear. Dify calls the OpenAI API for language understanding and generation, processing only content deliberately submitted by the student; Easey does not automatically read private WhatsApp, email, or LMS accounts.
+
+The Dify API key is stored as a Supabase Edge Function secret, while the OpenAI credential is stored in Dify. Neither credential appears in React code or the public GitHub repository. Docker and n8n were considered, but they are not required for this functional MVP because Supabase provides the secure integration layer and Dify manages the AI workflow.
+
 ### 5.3 Planned System Architecture
 
-![Easey proposed functional MVP architecture](docs/images/11-system-architecture.png)
+![Easey proposed functional MVP architecture](docs/report-images/16-system-architecture.png)
 
 **Current versus planned:** the current public prototype is the Vercel-hosted React interface, deterministic TypeScript capacity rules, and controlled local data. The functional MVP adds Supabase persistence and permissions plus the authenticated Dify-OpenAI path shown above.
+
+#### End-to-end system flow
+
+1. The student accesses the Easey React application hosted on Vercel.
+2. Supabase Auth verifies the student's identity.
+3. React loads the student's authorised data from Supabase PostgreSQL.
+4. Row Level Security limits access to the student's records and explicitly shared Circle information.
+5. Deterministic TypeScript rules calculate the workload forecast.
+6. When the student submits text for AI analysis, React sends it to a Supabase Edge Function.
+7. The Edge Function verifies the user, validates the content, and securely calls the appropriate Dify workflow.
+8. Dify manages the prompt and calls the OpenAI API.
+9. The structured result returns through Dify and the Edge Function to React.
+10. The student reviews and edits the result.
+11. Only confirmed information is saved to Supabase.
+12. Supabase Realtime sends authorised Capacity Circle changes and in-app notifications to the relevant members.
+13. Responsibility transfers only after both members agree on the scope and the receiving member explicitly accepts it. A reduced-scope response remains a counterproposal until agreed, while a declined request leaves the original responsibility unchanged.
 
 **Security boundary:** the browser never receives the Dify or OpenAI credential. The Edge Function verifies the Supabase token, validates and minimises the payload, enforces request limits, calls Dify, validates the returned structure, and sends an editable suggestion back to React. Dify stores the model credential and manages the AI workflow. No extracted task, proposed change, delegation, or message is committed without explicit confirmation.
 
@@ -355,6 +432,58 @@ Changing duration, effort, or deadline pressure updates the forecast immediately
 
 The public UI is already complete, so the build phase focuses on one functional vertical slice. **P0 is the release gate, P1 follows the working core, and P2 is limited to one collaboration slice that ships only after privacy and concurrency tests pass.** This prevents feature expansion from weakening the core journey.
 
+#### Already completed in the interactive prototype
+
+- Responsive React user interface.
+- Commitment management.
+- 60-second check-in.
+- Workload Dashboard.
+- Deterministic capacity calculation.
+- Hidden Load interaction.
+- Commitment Sandbox.
+- Explainable Action Plan.
+- Boundary Assistant.
+- Before-and-after Decision Receipt.
+- Reset Mode activities.
+- Capacity Circle and Assignment Workboard interface.
+- Public Vercel deployment.
+
+These features currently use controlled demo data.
+
+#### Prioritised implementation backlog
+
+**P0 - Persistent functional foundation**
+
+1. Configure Supabase Auth.
+2. Create the required PostgreSQL tables.
+3. Replace browser-local data with persistent user data.
+4. Apply Row Level Security policies.
+5. Save commitments, check-ins, decisions, and recovery preferences.
+6. Preserve the complete Capture -> Sandbox -> Action Plan -> Boundary -> After State journey.
+
+**P1 - Controlled AI workflow**
+
+1. Create one authenticated Supabase Edge Function.
+2. Build one Dify workflow for Hidden Load extraction.
+3. Connect Dify to the OpenAI API.
+4. Validate structured AI output.
+5. Display editable extracted information.
+6. Require confirmation before saving.
+7. Add retry and manual-entry fallback.
+8. Add editable boundary-message generation.
+
+**P2 - Multi-user Capacity Circle**
+
+1. Create real Circle invitations and membership records.
+2. Store each member's visibility preferences.
+3. Show only approved capacity signals.
+4. Implement help requests and recipient acceptance.
+5. Prevent multiple members from accepting the same assignment part.
+6. Enable Supabase Realtime updates.
+7. Record assignment, submission, review, and agreement events.
+
+#### Three-week sequence
+
 | Week                                            | Priority and deliverable                                                                                                                                                                                                             | Evidence of completion                                                                                                                                  |
 | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Week 1 - P0 identity, data, and permissions** | Configure Supabase Auth; create profiles, preferences, commitments, check-ins, decisions, Circle membership, and sharing tables; replace local state; implement deny-by-default RLS.                                                 | Two test users can sign in, retain their own data across sessions, and cannot read each other's private commitments or check-ins.                       |
@@ -365,6 +494,8 @@ Full Realtime Workboard synchronisation, advanced AI Assist conversation memory,
 
 ### 5.7 MVP Acceptance Criteria
 
+- A student can register, sign in, and access saved information across sessions.
+- Commitments and check-ins persist in Supabase.
 - A reviewer can complete **Capture -> Simulate -> Rebalance -> Respond -> Recover** without a dead end.
 - The interface explains every capacity change and reproduces the 82% -> 113% -> 84% demonstration.
 - A deliberately submitted message becomes editable structured information; stated details and AI-suggested hidden costs remain distinguishable.
@@ -448,7 +579,8 @@ src/
 |-- router.tsx    Router configuration
 `-- styles.css    Theme and Tailwind design tokens
 
-docs/images/               README prototype evidence
+docs/images/               Earlier prototype evidence retained in the project
+docs/report-images/        All 16 images imported from the final submission document
 ```
 
 `src/routeTree.gen.ts` is generated from the route files and should not be edited manually.
@@ -463,7 +595,8 @@ docs/images/               README prototype evidence
 - [x] Ideas kept and dropped documented
 - [x] Ideation boards embedded
 - [x] Mentor feedback and resulting changes documented
-- [x] Seven key prototype screens embedded
+- [x] All 16 images from the submission document embedded
+- [x] Eleven prototype screens shown with interaction captions
 - [x] Novelty and competitor comparison explained
 - [x] Current and planned architecture separated
 - [x] Three-week build plan and acceptance criteria defined
