@@ -272,6 +272,21 @@ Easey's novelty is the **decision sequence**, not a claim that every individual 
 4. **Capacity-adaptive recovery and focus**  
    Easey connects recovery with workload decisions and students’ relaxation preferences. Recovery Shield flags conflicts with protected rest and offers alternatives. Focus Cycle suggests a work-and-break rhythm based on the workload indicator, while students can override it or choose a recovery activity instead.
 
+#### How the Innovations Work Together
+
+Aina receives a request to prepare an entire sponsorship deck. Instead of simply warning that she is overloaded, Easey helps her explore a smaller contribution: preparing the outline and five slides while requesting help with the remaining work.
+
+The intended workflow connects four decisions:
+
+1. **Reveal the real cost:** review the stated task and confirm potentially overlooked preparation, coordination and follow-up work.
+2. **Define a smaller yes:** compare a contribution that fits Aina’s limits with accepting the full request.
+3. **Check both sides:** preview whether the proposed help would overload the receiving Circle member.
+4. **Separate proposal from agreement:** keep the proposed arrangement pending until the relevant people agree. An incoming request does not become an accepted commitment automatically, and existing responsibilities are not removed before agreement. If the proposal is rejected, the student can revisit alternatives.
+
+The proposed differentiation is the connection between hidden-cost discovery, a negotiable contribution, recipient workload and agreement status. A lower forecast represents a possible arrangement; it becomes an updated responsibility only after the required agreement.
+
+The current prototype illustrates selected steps using local demo data. Persistent agreement tracking and real cross-user acceptance are planned for the functional MVP.
+
 ### 4.2 Supporting Innovation
 
 - **Domino Effect:** reveals where the consequences appear across days, work, and recovery rather than showing only a final percentage.
