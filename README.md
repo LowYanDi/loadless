@@ -15,7 +15,7 @@ Easey is a capacity decision assistant for university students. It reveals the h
 | **Problem Statement**        | Stress & Workload Manager                                                                 |
 | **Interactive UI Prototype** | [Open Easey](https://loadless-ashy.vercel.app/)                                           |
 | **Video Presentation**       | **Add unlisted YouTube link before submission**                                           |
-| **Presentation Slides**      | **Add public slides link before submission**                                              |
+| **Presentation Slides**      | [Easey - Presentation slide](https://canva.link/esg0q5espxtsa28)                                          |
 
 The prototype link has been tested as a public deployment. The current build is an interactive UI prototype using controlled local data and deterministic rules; it does not yet use real accounts, live cross-user data, automatic message access, or a live AI model.
 
