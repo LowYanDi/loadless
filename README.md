@@ -14,7 +14,7 @@ Easey is a capacity decision assistant for university students. It reveals the h
 | **Contact Lead**             | Low Yan Di · 011-10893351                                                                 |
 | **Problem Statement**        | Stress & Workload Manager                                                                 |
 | **Interactive UI Prototype** | [Open Easey](https://loadless-ashy.vercel.app/)                                           |
-| **Video Presentation**       | **Add unlisted YouTube link before submission**                                           |
+| **Video Presentation**       | [Easey - Youtube Link](https://youtu.be/qCWTKX1Du0g)                                           |
 | **Presentation Slides**      | [Easey - Presentation slide](https://canva.link/esg0q5espxtsa28)                                          |
 
 The prototype link has been tested as a public deployment. The current build is an interactive UI prototype using controlled local data and deterministic rules; it does not yet use real accounts, live cross-user data, automatic message access, or a live AI model.
@@ -585,24 +585,6 @@ docs/report-images/        All 16 images imported from the final submission docu
 
 `src/routeTree.gen.ts` is generated from the route files and should not be edited manually.
 
----
-
-## 7. Submission Checklist
-
-- [x] Public GitHub repository prepared
-- [x] Public UI prototype linked and tested
-- [x] Problem, stakeholders, competitors, and solution documented
-- [x] Ideas kept and dropped documented
-- [x] Ideation boards embedded
-- [x] Mentor feedback and resulting changes documented
-- [x] All 16 images from the submission document embedded
-- [x] Eleven prototype screens shown with interaction captions
-- [x] Novelty and competitor comparison explained
-- [x] Current and planned architecture separated
-- [x] Three-week build plan and acceptance criteria defined
-- [ ] Add the unlisted YouTube video link
-- [x] Add the public presentation slides link
-- [x] Test every README link from an incognito window
 
 ---
 
