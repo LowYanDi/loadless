@@ -86,6 +86,24 @@ In the illustrative Aina demo scenario, accepting the request raises the workloa
 
 The intended change is not merely a lower number. The student makes an earlier, more informed, and more communicable decision.
 
+#### Intended Before-and-After Difference
+
+Before Easey, a student may accept an informal request based only on the visible task, overlooking preparation, coordination and the effect on existing responsibilities or recovery time.
+
+With Easey, the student can review those hidden demands, compare alternatives and prepare a specific response before committing. For example, Aina can propose an outline and five slides instead of accepting an entire sponsorship deck, while making the remaining work and required agreement explicit.
+
+The intended benefit is a more realistic commitment and a clearer next step—not simply a lower workload score. For students who are already overloaded, the same workflow helps identify what can be reduced, moved or negotiated, while keeping unresolved responsibilities visible.
+
+These are intended outcomes illustrated by the prototype, rather than measured reductions in stress or burnout.
+
+#### Reach and Scalability
+
+Easey can provide individual value without requiring an entire group to join. A student can begin by capturing a request, comparing options and preparing a boundary response.
+
+Our proposed adoption path starts with university assignment groups and student societies. Capacity Circle provides an optional next step when students need to coordinate help with trusted peers.
+
+After evaluating the initial pilot, we plan to expand through additional student groups and campus partners. Wider rollout will depend on feedback, accessibility, privacy checks and monitored service costs. The same decision workflow can support students managing different combinations of coursework, employment, society activities and family responsibilities.
+
 ---
 
 ## 2. Ideation & Process
@@ -539,6 +557,22 @@ The minimum functional MVP will include:
 The individual journey will be implemented first, followed by AI integration and the limited Circle flow. Privacy and acceptance checks are required before enabling real shared data.
 
 If implementation takes longer than expected, we will defer advanced Smart Match, full Workboard synchronisation, AI Assist conversation memory and additional personalisation before reducing the minimum delivery scope. Manual entry and editable response templates will remain available when AI services fail.
+
+#### Cost Allocation and Resource Assumptions
+
+The team plans a maximum service budget of RM200 for the three-week building phase.
+
+| Item | Planned Allocation | Purpose |
+| --- | ---: | --- |
+| OpenAI API usage | RM100 | Commitment extraction, response drafting, development tests and demonstrations. |
+| Contingency reserve | RM100 | Additional API testing or necessary service costs, subject to review before spending. |
+| **Total budget ceiling** | **RM200** | A spending limit, not a forecast that the full amount will be used. |
+
+We will prioritise free tiers for Supabase, Dify Cloud and Vercel where their quotas, collaboration limits and terms support the MVP. Paid upgrades are not assumed to fit within the budget automatically; any upgrade will be checked against the remaining funds before activation.
+
+The budget excludes existing development-tool subscriptions, hardware and internet access. API usage and remaining funds will be reviewed weekly.
+
+The planned 360 person-hours include learning, implementation, integration, testing and deployment. As the team is still developing familiarity with the backend and AI workflow tools, we will verify authentication, one database read/write flow and one server-side AI request early in the build. Workstream owners will coordinate integration, with optional features deferred if the core journey needs more time.
 
 ### 5.7 MVP Acceptance Criteria
 
