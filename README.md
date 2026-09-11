@@ -601,8 +601,8 @@ docs/report-images/        All 16 images imported from the final submission docu
 - [x] Current and planned architecture separated
 - [x] Three-week build plan and acceptance criteria defined
 - [ ] Add the unlisted YouTube video link
-- [ ] Add the public presentation slides link
-- [ ] Test every README link from an incognito window
+- [x] Add the public presentation slides link
+- [x] Test every README link from an incognito window
 
 ---
 
